@@ -1,0 +1,6 @@
+[submodule "vivado-library"]
+	path = vivado-library
+	url = git@github.com:Digilent/vivado-library.git
+[submodule "PYNQ"]
+	path = PYNQ
+	url = git@github.com:Xilinx/PYNQ.git
