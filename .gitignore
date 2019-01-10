@@ -12,6 +12,11 @@
 ##  VIVADO
 ###########################################################################
 #########
+#Vivado Folders:
+#########
+*.cache/
+*.ip_user_files/
+#########
 #Source files:
 #########
 #Do NOT ignore VHDL, Verilog, block diagrams or EDIF files.
