@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-// Date        : Thu Jan 10 15:58:21 2019
+// Date        : Thu Jan 10 15:58:17 2019
 // Host        : carotti running 64-bit Ubuntu 18.04.1 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/carotti/Documents/EIE4/6.s193/hardmark/hardmark.srcs/sources_1/bd/hardmark_top/ip/hardmark_top_clk_wiz_0_0/hardmark_top_clk_wiz_0_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top hardmark_top_clk_wiz_0_0 -prefix
+//               hardmark_top_clk_wiz_0_0_ hardmark_top_clk_wiz_0_0_sim_netlist.v
 // Design      : hardmark_top_clk_wiz_0_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -35,7 +35,6 @@ module hardmark_top_clk_wiz_0_0
         .reset(reset));
 endmodule
 
-(* ORIG_REF_NAME = "hardmark_top_clk_wiz_0_0_clk_wiz" *) 
 module hardmark_top_clk_wiz_0_0_hardmark_top_clk_wiz_0_0_clk_wiz
    (clk_out1,
     reset,
