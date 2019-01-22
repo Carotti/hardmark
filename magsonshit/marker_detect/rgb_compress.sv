@@ -3,8 +3,8 @@ module rgb_compress (clk_in, rgb_in, compressed_out);
 	parameter COLOUR_DEPTH = 8;
 	parameter AVERAGE_OVER = 1024;
 	localparam AVERAGE_BITS = $clog2(AVERAGE_OVER);
-	parameter MIN_THRES = 1 << (AVERAGE_BITS-4);
-	parameter MAX_THRES = 1 << (AVERAGE_BITS-1);
+	parameter MIN_THRES = 50;
+	parameter MAX_THRES = 200;
 
 	`define MAX(A, B)\
 		(A > B) ? A : B

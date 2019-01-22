@@ -22,12 +22,14 @@ module count_flips(	clk_in, // pixel clock
 	output logic done_out;
 
 	// -- states --
-	localparam INITIAL = 2'd0;
-	localparam WAS_WHITE = 2'd1;
-	localparam WAS_BLACK = 2'd2;
+	localparam INITIAL = 3'd0;
+	localparam WAS_WHITE = 3'd1;
+	localparam WAS_BLACK = 3'd2;
+	localparam WAIT_FOR_WHITE = 3'd3;
+	localparam WAIT_FOR_BLACK = 3'd4;
 
-	logic [1:0] state = INITIAL;
-	logic [1:0] state_prev = INITIAL;
+	logic [2:0] state = INITIAL;
+	logic [2:0] state_prev = INITIAL;
 	logic [10:0] prev_width = 11'b0;
 	logic [10:0] curr_width = 11'b0;
 	logic [10:0] curr_pixel = 11'b0;
@@ -50,7 +52,7 @@ module count_flips(	clk_in, // pixel clock
 		((X > Y) ? (X - Y) : (Y - X))
 
 	`define SUB_ABS_LT(X, Y, CMP) \
-		(((X > Y) && ((X-Y) < CMP)) || ((X < Y) && ((Y-X) < CMP)))
+		(((X >= Y) && ((X-Y) < CMP)) || ((X < Y) && ((Y-X) < CMP)))
 
 		// monotonic_increasing <= 1'b0; \
 	`define RESET \
@@ -61,8 +63,7 @@ module count_flips(	clk_in, // pixel clock
 		curr_width <= 11'b0; \
 		prev_width <= 11'b0; \
 		done_out <= 11'b0; \
-		number_of_flips_out <= 4'b0; \
-		curr_pixel <= 11'b0
+		number_of_flips_out <= 4'b0
 
 	`define SET_STATE_MA(NEW_STATE) \
 		if 	((state == INITIAL) || ( \
@@ -71,6 +72,7 @@ module count_flips(	clk_in, // pixel clock
 				(   																  	/* either */ \
 					( \
 					 	(number_of_flips_out == 5)  								  	/*	the pixel now belongs to the centre region */ \
+					 	&& (NEW_STATE == WAS_WHITE)										/*  the next pixel is white */ \
 						&& (`SUB_ABS_LT(2*prev_width, curr_width, MAX_WIDTH_DIFF))    	/*	and the width of the region ~ 2*prev_width */ \
 					) \
 					||  															  	/* or */ \
@@ -78,15 +80,16 @@ module count_flips(	clk_in, // pixel clock
 						(number_of_flips_out != 5)  								  	/*	it is not the centre region */ \
 						&&  														  	/* 	and */ \
 						(  															  	/*	either it is a stripe transition involving stripe 1 */ \
-							( (number_of_flips_out <= 2))  							  	/*	the width of the region >= prev_width and */ \
-							||  													  	/*	and */ \
+							( (number_of_flips_out == 1) && (curr_width > MIN_WIDTH)) 	/*	the width of the region >= prev_width and */ \
+							||  													  	/*	or */ \
 							( \
 								(`SUB_ABS_LT(prev_width, curr_width, MAX_WIDTH_DIFF))   /*	the difference in widths is not too great */ \
-								&& (curr_width < MAX_WIDTH)  						  	/*	and the width is not too great */ \
 								&& (curr_width > MIN_WIDTH)  						  	/*	and the width is not too small */ \
 							) \
 						) \
 					) \
+					||  															  	/* or */ \
+					( NEW_STATE == INITIAL ) \
 				) \
 			)) \
 		begin \
@@ -96,7 +99,11 @@ module count_flips(	clk_in, // pixel clock
 			/* change the state so we remember the new region colour */ \
 			state <= NEW_STATE; \
 			/* if we are in the centre region of the target */ \
-			if (number_of_flips_out == 5) \
+			if (NEW_STATE == INITIAL) \
+			begin \
+				`RESET; \
+			end \
+			else if (number_of_flips_out == 5) \
 			begin \
 				/* tell the output the centre of this possible target */ \
 				coord_out <= curr_pixel - (curr_width / 2); \
@@ -114,6 +121,7 @@ module count_flips(	clk_in, // pixel clock
 				done_out <= 1'b1; \
 				/* reset */ \
 				`RESET; \
+				number_of_flips_out <= 1; \
 			end \
 			else \
 			begin \
@@ -147,6 +155,7 @@ module count_flips(	clk_in, // pixel clock
 		if (rst_in)
 		begin
 			`RESET;
+			curr_pixel <= 0;
 		end
 		else
 		begin
@@ -158,20 +167,26 @@ module count_flips(	clk_in, // pixel clock
 				begin
 					`SET_STATE_MA(WAS_BLACK)
 				end
-				else if (is_white == 1'b1)
-				begin
-					`SET_STATE_MA(WAS_WHITE)
-				end
 			end
 			else if (state == WAS_BLACK)
 			begin
 				if (is_black == 1'b1)
 				begin
-					curr_width <= curr_width + 1;
+					if (curr_width < MAX_WIDTH)
+					begin
+						curr_width <= curr_width + 1;
+					end
+					else
+					begin
+						state <= WAIT_FOR_WHITE;
+					end
 				end
 				else if (is_white == 1'b1)
 				begin
 					`SET_STATE_MA(WAS_WHITE)
+				end
+				else begin
+					`SET_STATE_MA(INITIAL)
 				end
 			end
 			else if (state == WAS_WHITE)
@@ -182,8 +197,27 @@ module count_flips(	clk_in, // pixel clock
 				end
 				else if (is_white == 1'b1)
 				begin
-					curr_width <= curr_width + 1;
+					if (curr_width < MAX_WIDTH)
+					begin
+						curr_width <= curr_width + 1;
+					end
+					else
+					begin
+						state <= WAIT_FOR_BLACK;
+					end
 				end
+				else
+				begin
+					`SET_STATE_MA(INITIAL)
+				end
+			end
+			else if ((state == WAIT_FOR_BLACK) && (is_black == 1'b1))
+			begin
+				`RESET;
+			end
+			else if ((state == WAIT_FOR_WHITE) && (is_white == 1'b1))
+			begin
+				`RESET;
 			end
 		end
 	end

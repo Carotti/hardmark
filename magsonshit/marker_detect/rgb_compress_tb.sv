@@ -23,31 +23,31 @@ module rgb_compress_tb;
 		curr_pixel <= curr_pixel + 1;
 	end
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc1 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc1 (	.clk_in(clk),
 						.rgb_in(target1[curr_pixel]),
 						.compressed_out(compressed_pixel_1) );
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc2 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc2 (	.clk_in(clk),
 						.rgb_in(target2[curr_pixel]),
 						.compressed_out(compressed_pixel_2) );
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc3 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc3 (	.clk_in(clk),
 						.rgb_in(target3[curr_pixel]),
 						.compressed_out(compressed_pixel_3) );
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc4 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc4 (	.clk_in(clk),
 						.rgb_in(target4[curr_pixel]),
 						.compressed_out(compressed_pixel_4) );
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc5 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc5 (	.clk_in(clk),
 						.rgb_in(target5[curr_pixel]),
 						.compressed_out(compressed_pixel_5) );
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc6 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc6 (	.clk_in(clk),
 						.rgb_in(target6[curr_pixel]),
 						.compressed_out(compressed_pixel_6) );
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3), .MIN_THRES(0), .MAX_THRES(255)) rgbc7 (	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(3)) rgbc7 (	.clk_in(clk),
 						.rgb_in(target7[curr_pixel]),
 						.compressed_out(compressed_pixel_7) );
 

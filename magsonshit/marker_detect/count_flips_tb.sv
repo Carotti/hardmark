@@ -23,21 +23,21 @@ module count_flips_tb;
 	always_ff @(posedge clk)
 	begin
 		rst <= 0;
-		vcount <= vcount + 1;
+		hcount <= hcount + 1;
 		$display("%d", curr_pixel);
 		if (~done)
 		begin
 			curr_pixel <= curr_pixel + 1;
 		end
-		else if (vcount == 1049)
+		if (~done && (hcount >= 11'd1679))
 		begin
-			vcount <= 0;
-			hcount <= hcount + 1;
+			hcount <= 0;
+			vcount <= vcount + 1;
 			rst <= 1;
 		end
 	end
 
-	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(1024), .MIN_THRES(0), .MAX_THRES(255)) rgbc1(	.clk_in(clk),
+	rgb_compress #(.COLOUR_DEPTH(8), .AVERAGE_OVER(1024)) rgbc1(	.clk_in(clk),
 						.rgb_in(pixel_uncompressed),
 						.compressed_out(compressed_pixel) );
 
