@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# circle, xvga
+# scene_wrapper, xvga
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -172,17 +172,6 @@ proc create_root_design { parentCell } {
    CONFIG.PHASE {0.000} \
  ] $sys_clock
 
-  # Create instance: circle_0, and set properties
-  set block_name circle
-  set block_cell_name circle_0
-  if { [catch {set circle_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
-     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   } elseif { $circle_0 eq "" } {
-     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   }
-  
   # Create instance: clk_wiz_0, and set properties
   set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0 ]
   set_property -dict [ list \
@@ -205,12 +194,22 @@ proc create_root_design { parentCell } {
    CONFIG.kGenerateSerialClk {true} \
  ] $rgb2dvi_0
 
+  # Create instance: scene_wrapper_0, and set properties
+  set block_name scene_wrapper
+  set block_cell_name scene_wrapper_0
+  if { [catch {set scene_wrapper_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $scene_wrapper_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: util_vector_logic_0, and set properties
   set util_vector_logic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 util_vector_logic_0 ]
   set_property -dict [ list \
    CONFIG.C_OPERATION {not} \
    CONFIG.C_SIZE {1} \
-   CONFIG.LOGO_FILE {data/sym_notgate.png} \
  ] $util_vector_logic_0
 
   # Create instance: xlconstant_0, and set properties
@@ -218,6 +217,14 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.CONST_VAL {0} \
  ] $xlconstant_0
+
+  # Create instance: xlslice_0, and set properties
+  set xlslice_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {31} \
+   CONFIG.DIN_TO {8} \
+   CONFIG.DOUT_WIDTH {24} \
+ ] $xlslice_0
 
   # Create instance: xvga_0, and set properties
   set block_name xvga
@@ -244,15 +251,14 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net rgb2dvi_0_TMDS [get_bd_intf_ports hdmi_out] [get_bd_intf_pins rgb2dvi_0/TMDS]
 
   # Create port connections
-  connect_bd_net -net circle_0_pData [get_bd_pins circle_0/pData] [get_bd_pins rgb2dvi_0/vid_pData]
-  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins rgb2dvi_0/PixelClk] [get_bd_pins xvga_0/vclock]
+  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins rgb2dvi_0/PixelClk] [get_bd_pins scene_wrapper_0/pixel_clk] [get_bd_pins xvga_0/vclock]
   connect_bd_net -net reset_rtl_1 [get_bd_pins clk_wiz_0/reset] [get_bd_pins rgb2dvi_0/aRst] [get_bd_pins xlconstant_0/dout]
+  connect_bd_net -net scene_wrapper_0_pixel_data [get_bd_pins scene_wrapper_0/pixel_data] [get_bd_pins xlslice_0/Din]
   connect_bd_net -net sys_clock_1 [get_bd_ports sys_clock] [get_bd_pins clk_wiz_0/clk_in1]
   connect_bd_net -net util_vector_logic_0_Res [get_bd_pins rgb2dvi_0/vid_pVDE] [get_bd_pins util_vector_logic_0/Res]
+  connect_bd_net -net xlslice_0_Dout [get_bd_pins rgb2dvi_0/vid_pData] [get_bd_pins xlslice_0/Dout]
   connect_bd_net -net xvga_0_blank [get_bd_pins util_vector_logic_0/Op1] [get_bd_pins xvga_0/blank]
-  connect_bd_net -net xvga_0_hcount [get_bd_pins circle_0/hcount] [get_bd_pins xvga_0/hcount]
   connect_bd_net -net xvga_0_hsync [get_bd_pins rgb2dvi_0/vid_pHSync] [get_bd_pins xvga_0/hsync]
-  connect_bd_net -net xvga_0_vcount [get_bd_pins circle_0/vcount] [get_bd_pins xvga_0/vcount]
   connect_bd_net -net xvga_0_vsync [get_bd_pins rgb2dvi_0/vid_pVSync] [get_bd_pins xvga_0/vsync]
 
   # Create address segments

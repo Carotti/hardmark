@@ -7,6 +7,7 @@ proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "hFrontPorch" -parent ${Page_0}
   ipgui::add_param $IPINST -name "hSyncWidth" -parent ${Page_0}
   ipgui::add_param $IPINST -name "hWidth" -parent ${Page_0}
+  ipgui::add_param $IPINST -name "pipelineLatency" -parent ${Page_0}
   ipgui::add_param $IPINST -name "vBackPorch" -parent ${Page_0}
   ipgui::add_param $IPINST -name "vFrontPorch" -parent ${Page_0}
   ipgui::add_param $IPINST -name "vSyncWidth" -parent ${Page_0}
@@ -48,6 +49,15 @@ proc update_PARAM_VALUE.hWidth { PARAM_VALUE.hWidth } {
 
 proc validate_PARAM_VALUE.hWidth { PARAM_VALUE.hWidth } {
 	# Procedure called to validate hWidth
+	return true
+}
+
+proc update_PARAM_VALUE.pipelineLatency { PARAM_VALUE.pipelineLatency } {
+	# Procedure called to update pipelineLatency when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.pipelineLatency { PARAM_VALUE.pipelineLatency } {
+	# Procedure called to validate pipelineLatency
 	return true
 }
 
@@ -126,5 +136,10 @@ proc update_MODELPARAM_VALUE.vBackPorch { MODELPARAM_VALUE.vBackPorch PARAM_VALU
 proc update_MODELPARAM_VALUE.vSyncWidth { MODELPARAM_VALUE.vSyncWidth PARAM_VALUE.vSyncWidth } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
 	set_property value [get_property value ${PARAM_VALUE.vSyncWidth}] ${MODELPARAM_VALUE.vSyncWidth}
+}
+
+proc update_MODELPARAM_VALUE.pipelineLatency { MODELPARAM_VALUE.pipelineLatency PARAM_VALUE.pipelineLatency } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.pipelineLatency}] ${MODELPARAM_VALUE.pipelineLatency}
 }
 

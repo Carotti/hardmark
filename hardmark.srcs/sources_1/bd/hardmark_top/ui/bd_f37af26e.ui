@@ -4,24 +4,24 @@
 #  -string -flagsOSRD
 preplace port sys_clock -pg 1 -y 350 -defaultsOSRD
 preplace port hdmi_out -pg 1 -y 190 -defaultsOSRD
+preplace inst xlslice_0 -pg 1 -lvl 4 -y -60 -defaultsOSRD
+preplace inst scene_wrapper_0 -pg 1 -lvl 3 -y -20 -defaultsOSRD
 preplace inst xlconstant_0 -pg 1 -lvl 1 -y 270 -defaultsOSRD
-preplace inst xvga_0 -pg 1 -lvl 3 -y 120 -defaultsOSRD
+preplace inst xvga_0 -pg 1 -lvl 3 -y 150 -defaultsOSRD
 preplace inst util_vector_logic_0 -pg 1 -lvl 4 -y 210 -defaultsOSRD
-preplace inst rgb2dvi_0 -pg 1 -lvl 5 -y 190 -defaultsOSRD
-preplace inst circle_0 -pg 1 -lvl 4 -y 70 -defaultsOSRD
+preplace inst rgb2dvi_0 -pg 1 -lvl 5 -y 200 -defaultsOSRD
 preplace inst clk_wiz_0 -pg 1 -lvl 2 -y 340 -defaultsOSRD
-preplace netloc circle_0_pData 1 4 1 970
-preplace netloc xvga_0_vsync 1 3 2 640 150 950J
-preplace netloc util_vector_logic_0_Res 1 4 1 NJ
-preplace netloc xvga_0_hsync 1 3 2 N 140 960J
+preplace netloc xvga_0_vsync 1 3 2 N 150 1340J
+preplace netloc util_vector_logic_0_Res 1 4 1 1320J
+preplace netloc xvga_0_hsync 1 3 2 1010 280 1330J
 preplace netloc sys_clock_1 1 0 2 NJ 350 NJ
-preplace netloc rgb2dvi_0_TMDS 1 5 1 N
-preplace netloc xvga_0_vcount 1 3 1 650
-preplace netloc clk_wiz_0_clk_out1 1 2 3 380 280 NJ 280 970J
-preplace netloc xvga_0_blank 1 3 1 650
-preplace netloc xvga_0_hcount 1 3 1 640
-preplace netloc reset_rtl_1 1 1 4 180 270 NJ 270 NJ 270 950J
-levelinfo -pg 1 0 100 280 510 800 1100 1250 -top 0 -bot 410
+preplace netloc rgb2dvi_0_TMDS 1 5 1 1610
+preplace netloc clk_wiz_0_clk_out1 1 2 3 440 290 NJ 290 1350J
+preplace netloc scene_wrapper_0_pixel_data 1 3 1 1010
+preplace netloc xvga_0_blank 1 3 1 1000
+preplace netloc xlslice_0_Dout 1 4 1 1350
+preplace netloc reset_rtl_1 1 1 4 180 270 NJ 270 NJ 270 1340J
+levelinfo -pg 1 -60 100 340 860 1170 1480 1630 -top -120 -bot 410
 ",
 }
 {
