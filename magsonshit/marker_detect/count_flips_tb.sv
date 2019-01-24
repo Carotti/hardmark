@@ -3,17 +3,19 @@ module count_flips_tb;
 	logic clk = 0;
 	logic rst = 1;
 	logic done;
+	logic covered_screen;
 
 	logic [31:0] curr_pixel = 0;
 	logic [2:0] compressed_pixel;
 	logic [10:0] hcount = 0;
 	logic [10:0] vcount = 0;
-
+	logic [10:0] centre_width;
 	logic [3:0] number_of_flips;
 	logic [10:0] coord;
 	logic [10:0] nt_probability;
 	logic [23:0] pixel_uncompressed;
 
+	assign covered_screen = (vcount == 1051);
 	assign pixel_uncompressed = full_test1[curr_pixel];
 	always #5
 	begin
@@ -24,7 +26,8 @@ module count_flips_tb;
 	begin
 		rst <= 0;
 		hcount <= hcount + 1;
-		$display("%d", curr_pixel);
+		$display("Coordinate: %d", coord);
+		$display("VCount: %d", vcount);
 		if (~done)
 		begin
 			curr_pixel <= curr_pixel + 1;
@@ -46,6 +49,7 @@ module count_flips_tb;
 						.rgb_in(compressed_pixel),
 						.number_of_flips_out(number_of_flips),
 						.coord_out(coord),
+						.centre_width_out(centre_width),
 						.nt_probability_out(nt_probability),
 						.done_out(done) );
 	initial
@@ -57,7 +61,7 @@ module count_flips_tb;
 			$dumpvars(1, rgbc1.colour_sum[i]);
 			$dumpvars(1, rgbc1.colour_avg[i]);
 		end
-		@(posedge done)
+		@(posedge covered_screen)
 		begin
 			$finish;
 		end

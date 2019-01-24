@@ -8,11 +8,11 @@ module count_flips(	clk_in, // pixel clock
 					done_out // goes high when all bands for a target has been detected
 				  );
 	// maximum stripe width measured in number of pixels
-	parameter MAX_WIDTH = 200;
+	parameter MAX_WIDTH = 100;
 	// minimum stripe width measured in number of pixels
-	parameter MIN_WIDTH = 10;
+	parameter MIN_WIDTH = 5;
 	// maximum difference in stripe width for the same target
-	parameter MAX_WIDTH_DIFF = 100;
+	parameter MAX_WIDTH_DIFF = 40;
 	// the minimum number of bits which must be high in rgb_in in order for the pixel to classify as white
 	parameter WHITE_THRES = 2;
 	// the maximum number of bits which must be high in rgb_in in order for the pixel to classify as black
@@ -55,17 +55,12 @@ module count_flips(	clk_in, // pixel clock
 	logic is_centre_region;
 	// high if we thing we are currently in one of the stripes of the target
 	logic is_stripe_region;
-
-	// high if the subsequent widths are greater than the previous widths
-	// logic monotonic_increasing = 0;
-	// low if the subsequent widths are less than the previous widths
-	// logic monotonic_decreasing;
-	// high if the current stripe width is greater than or equal to the previous width
-	// logic curr_ge_prev;
-	// logic curr_l_prev;
-	// high if the current stripe width is less than the previous width
-	// logic prev_ge_curr;
-
+	// high if the state is initial
+	logic is_state_initial;
+	// high if the state is black
+	logic is_state_black;
+	// high if the new state is initial
+	logic will_be_initial;
 
 	`define SUB_ABS(X, Y) \
 		((X > Y) ? (X - Y) : (Y - X))
@@ -73,26 +68,61 @@ module count_flips(	clk_in, // pixel clock
 	`define SUB_ABS_LT(X, Y, CMP) \
 		(((X >= Y) && ((X-Y) < CMP)) || ((X < Y) && ((Y-X) < CMP)))
 
-		// monotonic_increasing <= 1'b0; \
 	`define RESET \
 		state <= INITIAL; \
-		coord_out <= 11'b0; \
-		nt_probability_out <= 11'b0; \
 		state_prev <= INITIAL; \
 		curr_width <= 11'b0; \
-		prev_width <= 11'b0; \
-		done_out <= 11'b0; \
-		centre_width_out <= 11'b0; \
-		number_of_flips_out <= 4'b0
+		prev_width <= 11'b0
+
+	`define CENTRE_REGION_STATE \
+		/* the probability of not being a target is the abs difference of 2*prev_width, centre width */ \
+		nt_probability_out <= nt_probability_out + `SUB_ABS(2*prev_width, curr_width); \
+		/* tell the output the centre of this possible target */ \
+		coord_out <= curr_pixel - (curr_width / 2); \
+		/* remember the centre width */ \
+		centre_width_out <= curr_width; \
+		/* the previous width, as it is used to compare with stripes of width centre width/2: */ \
+		prev_width <= curr_width / 2; \
+		/* increment the number of flips */ \
+		number_of_flips_out <= number_of_flips_out + 1
+
+	`define STRIPE_REGION_STATE \
+		/* the probability of not being a target is the abs difference of prev_width, centre width */ \
+		nt_probability_out <= nt_probability_out + `SUB_ABS(prev_width, curr_width); \
+		/* this just a transition from one stripe to another */ \
+		prev_width <= curr_width; \
+		/* increment the number of flips */ \
+		number_of_flips_out <= number_of_flips_out + 1
+
+	`define FINISH \
+		/* the probability of not being a target is the abs difference of prev_width, centre width */ \
+		nt_probability_out <= nt_probability_out + `SUB_ABS(prev_width, curr_width); \
+		/* tell the output we are done and the previous centre coordinate is probably valid */ \
+		done_out <= 1'b1; \
+		/* reset */ \
+		`RESET
+
+	`define CHANGE_STATE \
+		if (will_be_initial) \
+		begin \
+			`RESET; \
+		end \
+		else if (is_centre_region) \
+		begin \
+			`CENTRE_REGION_STATE; \
+		end \
+		/* this is the last flip */ \
+		else if ((number_of_flips_out == 9) && (is_white)) \
+		begin \
+			`FINISH; \
+		end \
+		else \
+		begin \
+			`STRIPE_REGION_STATE; \
+		end \
 
 	`define SET_STATE_MA(NEW_STATE) \
-		if 	((state == INITIAL) || ( \
-				(state == state_prev)   											  	/* This is not just an erroneous bit flip */ \
-				&&   																  	/* and */ \
-				(   																  	/* either */ \
-					(is_centre_region == 1'b1) || (is_stripe_region == 1'b1) || (NEW_STATE == INITIAL)\
-				) \
-			)) \
+		if 	(is_state_initial | ( &(NEW_STATE ~^ state_prev) & (is_centre_region | is_stripe_region | will_be_initial) ) ) \
 		begin \
 			/* -- move to the next state: -- */ \
 			/* reset the curr_width */ \
@@ -100,40 +130,9 @@ module count_flips(	clk_in, // pixel clock
 			/* change the state so we remember the new region colour */ \
 			state <= NEW_STATE; \
 			/* if the new state is the INITIAL state, we need to reset */ \
-			if (NEW_STATE == INITIAL) \
-			begin \
-				`RESET; \
-			end \
-			else if (is_centre_region == 1'b1) \
-			begin \
-				/* tell the output the centre of this possible target */ \
-				coord_out <= curr_pixel - (curr_width / 2); \
-				/* the probability of not being a target is the abs difference of 2*prev_width, centre width */ \
-				nt_probability_out <= `SUB_ABS(2*prev_width, curr_width); \
-				centre_width_out <= curr_width; \
-				/* the previous width, as it is used to compare with stripes of width centre width/2: */ \
-				prev_width <= curr_width / 2; \
-				/* increment the number of flips */ \
-				number_of_flips_out <= number_of_flips_out + 1; \
-			end \
-			/* this is the last flip */ \
-			else if (number_of_flips_out == 9) \
-			begin \
-				/* tell the output we are done and the previous centre coordinate is probably valid */ \
-				done_out <= 1'b1; \
-				/* reset */ \
-				`RESET; \
-				number_of_flips_out <= 1; \
-			end \
-			else \
-			begin \
-				/* this just a transition from one stripe to another */ \
-				prev_width <= curr_width; \
-				/* increment the number of flips */ \
-				number_of_flips_out <= number_of_flips_out + 1; \
-			end \
+			`CHANGE_STATE \
 		end \
-		else if (state == state_prev) \
+		else if (&(NEW_STATE ~^ state_prev)) \
 		begin \
 			/* the width conditions fail, thus the previous region was not part of a marker */ \
 			`RESET; \
@@ -144,26 +143,32 @@ module count_flips(	clk_in, // pixel clock
 			state_prev <= NEW_STATE; \
 		end
 
-	// assign monotonic_decreasing = ~monotonic_increasing;
 
-	// assign curr_ge_prev = (curr_width >= prev_width);
-	// assign curr_l_prev = ~curr_ge_prev;
-
-	assign is_black = (rgb_in[0] + rgb_in[1] + rgb_in[2] <= BLACK_THRES) ? 1'b1 : 1'b0;
-	assign is_white = (rgb_in[0] + rgb_in[1] + rgb_in[2] >  WHITE_THRES) ? 1'b1 : 1'b0;
+	assign is_black = (rgb_in[0] + rgb_in[1] + rgb_in[2] <= BLACK_THRES);
+	assign is_white = (rgb_in[0] + rgb_in[1] + rgb_in[2] >  WHITE_THRES);
 	// the number of black-white flips is 5, the difference between the current and last stripe width is less than MAX_WIDTH_DIFF
 	// the previous region colour was black
 	assign is_centre_region = 	(		(number_of_flips_out == 5)
+									&& (is_white)
 									&& 	(`SUB_ABS_LT(2*prev_width, curr_width, MAX_WIDTH_DIFF)
-									&&  (state == WAS_BLACK) )
-								) ? 1'b1 : 1'b0;
+											&&	`SUB_ABS_LT(2*prev_width, curr_width, ((prev_width >> 1) + (prev_width >> 2) + (prev_width >> 2)))
+											&&  (state == WAS_BLACK)
+										)
+								);
 	// the number of black-white flips is not 5 and either the number of flips is 1 and the current width is in the acceptable range
 	// or the difference between the current and previous region is less than MAX_WIDTH_DIFF
 	assign is_stripe_region = 	(	(number_of_flips_out != 5)
 								&& 	( 	((number_of_flips_out == 1) && (curr_width > MIN_WIDTH))
-									|| 	((`SUB_ABS_LT(prev_width, curr_width, MAX_WIDTH_DIFF)) && (curr_width > MIN_WIDTH))
+									|| 	((`SUB_ABS_LT(prev_width, curr_width, MAX_WIDTH_DIFF))
+											&& `SUB_ABS_LT(prev_width, curr_width, ((prev_width >> 2) + (prev_width >> 2)))
+											&& (curr_width > MIN_WIDTH)
+										)
 									)
-								) ? 1'b1 : 1'b0;
+								);
+
+	assign is_state_initial = (state == INITIAL);
+	assign is_state_black = (state == WAS_BLACK);
+	assign will_be_initial = (is_state_black & ~(is_white | is_black));
 
 	always_ff @(posedge clk_in or posedge rst_in)
 	begin
@@ -182,6 +187,11 @@ module count_flips(	clk_in, // pixel clock
 			// -- fsm --
 			if (state == INITIAL)
 			begin
+				coord_out <= 11'b0;
+				nt_probability_out <= 11'b0;
+				centre_width_out <= 11'b0;
+				number_of_flips_out <= 4'b0;
+				done_out <= 1'b0;
 				// the target starts with a black stripe
 				if (is_black == 1'b1)
 				begin
