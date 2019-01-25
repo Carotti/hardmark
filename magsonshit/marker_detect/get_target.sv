@@ -24,8 +24,8 @@ module get_target(	clk_in,
 
 	input clk_in;
 	input rst_in;
-	input logic [$clog2(SCREEN_WIDTH):0] hcount_in;
-	input logic [$clog2(SCREEN_HEIGHT):0] vcount_in;
+	input [$clog2(SCREEN_WIDTH):0] hcount_in;
+	input [$clog2(SCREEN_HEIGHT):0] vcount_in;
 	input [2:0] rgb_in;
 	output logic [$clog2(SCREEN_WIDTH):0] xcount_out [NUM_TARGETS-1:0];
 	output logic [$clog2(SCREEN_HEIGHT):0] ycount_out [NUM_TARGETS-1:0];
