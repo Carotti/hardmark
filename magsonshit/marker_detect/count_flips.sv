@@ -1,5 +1,6 @@
 module count_flips(	clk_in, // pixel clock
 					rst_in, // active high reset. Resets after every new vcount
+					hcount_in, // the horizontal pixel number
 					rgb_in, // 3 bit RGB value of current pixel being processed
 					number_of_flips_out, // for the previous pixels in row, how many diff. colour bands
 					coord_out, // gives hcount for centre of target
@@ -17,15 +18,17 @@ module count_flips(	clk_in, // pixel clock
 	parameter WHITE_THRES = 2;
 	// the maximum number of bits which must be high in rgb_in in order for the pixel to classify as black
 	parameter BLACK_THRES = 0;
+	parameter SCREEN_WIDTH = 1024;
 
 	input clk_in;
 	input rst_in;
+	input [$clog2(SCREEN_WIDTH):0] hcount_in;
 	input [2:0] rgb_in;
 
 	output logic [3:0] number_of_flips_out;
-	output logic [10:0] coord_out;
-	output logic [10:0] centre_width_out;
-	output logic [10:0] nt_probability_out = 5'b0;
+	output logic [$clog2(SCREEN_WIDTH):0] coord_out;
+	output logic [$clog2(MAX_WIDTH):0] centre_width_out;
+	output logic [10:0] nt_probability_out = 0;
 	output logic done_out;
 
 	// -- states --
@@ -41,9 +44,8 @@ module count_flips(	clk_in, // pixel clock
 	// -- initialise regs --
 	logic [2:0] state = INITIAL;
 	logic [2:0] state_prev = INITIAL;
-	logic [10:0] prev_width = 11'b0;
-	logic [10:0] curr_width = 11'b0;
-	logic [10:0] curr_pixel = 11'b0;
+	logic [$clog2(MAX_WIDTH):0] prev_width = 0;
+	logic [$clog2(MAX_WIDTH):0] curr_width = 0;
 
 	// -- wires --
 
@@ -71,14 +73,14 @@ module count_flips(	clk_in, // pixel clock
 	`define RESET \
 		state <= INITIAL; \
 		state_prev <= INITIAL; \
-		curr_width <= 11'b0; \
-		prev_width <= 11'b0
+		curr_width <= 0; \
+		prev_width <= 0
 
 	`define CENTRE_REGION_STATE \
 		/* the probability of not being a target is the abs difference of 2*prev_width, centre width */ \
 		nt_probability_out <= nt_probability_out + `SUB_ABS(2*prev_width, curr_width); \
 		/* tell the output the centre of this possible target */ \
-		coord_out <= curr_pixel - (curr_width / 2); \
+		coord_out <= hcount_in - (curr_width / 2); \
 		/* remember the centre width */ \
 		centre_width_out <= curr_width; \
 		/* the previous width, as it is used to compare with stripes of width centre width/2: */ \
@@ -126,7 +128,7 @@ module count_flips(	clk_in, // pixel clock
 		begin \
 			/* -- move to the next state: -- */ \
 			/* reset the curr_width */ \
-			curr_width <= 11'b0; \
+			curr_width <= 0; \
 			/* change the state so we remember the new region colour */ \
 			state <= NEW_STATE; \
 			/* if the new state is the INITIAL state, we need to reset */ \
@@ -175,21 +177,17 @@ module count_flips(	clk_in, // pixel clock
 		if (rst_in)
 		begin
 			`RESET;
-			curr_pixel <= 0;
 		end
 		else
 		begin
-			// increment the current pixel.
-			// curr_pixel is mainly for debugging purposes
-			curr_pixel <= curr_pixel + 1;
 			// save the current state
 			state_prev <= state;
 			// -- fsm --
 			if (state == INITIAL)
 			begin
-				coord_out <= 11'b0;
-				nt_probability_out <= 11'b0;
-				centre_width_out <= 11'b0;
+				coord_out <= 0;
+				nt_probability_out <= 0;
+				centre_width_out <= 0;
 				number_of_flips_out <= 4'b0;
 				done_out <= 1'b0;
 				// the target starts with a black stripe
