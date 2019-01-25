@@ -41,19 +41,19 @@ module get_target_wrapper(clk_in,
 	input [$clog2(SCREEN_WIDTH):0] hcount_in;
 	input [$clog2(SCREEN_HEIGHT):0] vcount_in;
 
-	wire [$clog2(SCREEN_WIDTH):0] xcount0_out;
-	wire [$clog2(SCREEN_WIDTH):0] xcount1_out;
-	wire [$clog2(SCREEN_WIDTH):0] xcount2_out;
-	wire [$clog2(SCREEN_WIDTH):0] xcount3_out;
-	wire [$clog2(SCREEN_HEIGHT):0] ycount0_out;
-	wire [$clog2(SCREEN_HEIGHT):0] ycount1_out;
-	wire [$clog2(SCREEN_HEIGHT):0] ycount2_out;
-	wire [$clog2(SCREEN_HEIGHT):0] ycount3_out;
-	wire [$clog2(SCREEN_HEIGHT):0] diameter0_out;
-	wire [$clog2(SCREEN_HEIGHT):0] diameter1_out;
-	wire [$clog2(SCREEN_HEIGHT):0] diameter2_out;
-	wire [$clog2(SCREEN_HEIGHT):0] diameter3_out;
-	wire [3:0] valid_out;
+	output [$clog2(SCREEN_WIDTH):0] xcount0_out;
+	output [$clog2(SCREEN_WIDTH):0] xcount1_out;
+	output [$clog2(SCREEN_WIDTH):0] xcount2_out;
+	output [$clog2(SCREEN_WIDTH):0] xcount3_out;
+	output [$clog2(SCREEN_HEIGHT):0] ycount0_out;
+	output [$clog2(SCREEN_HEIGHT):0] ycount1_out;
+	output [$clog2(SCREEN_HEIGHT):0] ycount2_out;
+	output [$clog2(SCREEN_HEIGHT):0] ycount3_out;
+	output [$clog2(SCREEN_HEIGHT):0] diameter0_out;
+	output [$clog2(SCREEN_HEIGHT):0] diameter1_out;
+	output [$clog2(SCREEN_HEIGHT):0] diameter2_out;
+	output [$clog2(SCREEN_HEIGHT):0] diameter3_out;
+	output [3:0] valid_out;
 
 	wire [$clog2(SCREEN_WIDTH):0] xcount [NUM_TARGETS-1:0];
 	wire [$clog2(SCREEN_HEIGHT):0] ycount [NUM_TARGETS-1:0];
