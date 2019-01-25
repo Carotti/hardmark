@@ -554,11 +554,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Jan 25 17:23:09 UTC 2019</spirit:value>
+            <spirit:value>Fri Jan 25 17:53:45 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:899df712</spirit:value>
+            <spirit:value>8:15bbaea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -574,11 +574,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Jan 25 17:23:09 UTC 2019</spirit:value>
+            <spirit:value>Fri Jan 25 17:53:45 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:899df712</spirit:value>
+            <spirit:value>8:15bbaea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -594,11 +594,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Jan 25 17:23:09 UTC 2019</spirit:value>
+            <spirit:value>Fri Jan 25 17:53:45 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:d3906a8e</spirit:value>
+            <spirit:value>8:e494b2dc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -614,11 +614,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri Jan 25 17:23:09 UTC 2019</spirit:value>
+            <spirit:value>Fri Jan 25 17:53:45 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:d3906a8e</spirit:value>
+            <spirit:value>8:e494b2dc</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -631,8 +631,12 @@
         </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
+            <spirit:name>GENtimestamp</spirit:name>
+            <spirit:value>Fri Jan 25 17:55:06 UTC 2019</spirit:value>
+          </spirit:parameter>
+          <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:899df712</spirit:value>
+            <spirit:value>8:15bbaea7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1237,11 +1241,11 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/5fad/hdl/render_register_v1_0_S00_AXI.v</spirit:name>
+        <spirit:name>../../ipshared/269a/hdl/render_register_v1_0_S00_AXI.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/5fad/hdl/render_register_v1_0.v</spirit:name>
+        <spirit:name>../../ipshared/269a/hdl/render_register_v1_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1256,11 +1260,11 @@
     <spirit:fileSet>
       <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../../ipshared/5fad/hdl/render_register_v1_0_S00_AXI.v</spirit:name>
+        <spirit:name>../../ipshared/269a/hdl/render_register_v1_0_S00_AXI.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../ipshared/5fad/hdl/render_register_v1_0.v</spirit:name>
+        <spirit:name>../../ipshared/269a/hdl/render_register_v1_0.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1369,7 +1373,7 @@
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
       <xilinx:displayName>render_register_v1.0</xilinx:displayName>
-      <xilinx:coreRevision>7</xilinx:coreRevision>
+      <xilinx:coreRevision>8</xilinx:coreRevision>
       <xilinx:tags>
         <xilinx:tag xilinx:name="user.org:user:render_register:1.0_ARCHIVE_LOCATION">/home/carotti/Documents/EIE4/6.s193/ip_repo/render_register_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="nippy.org:user:render_register:1.0_ARCHIVE_LOCATION">/home/carotti/Documents/EIE4/6.s193/ip_repo/render_register_1.0</xilinx:tag>
@@ -1410,8 +1414,8 @@
       <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="1c8dfb01"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="b5c28f9a"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="b08cbde5"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="368e4ab5"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="44571d1d"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="e7b50784"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="ac8de891"/>
     </xilinx:packagingInfo>

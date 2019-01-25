@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-//Date        : Fri Jan 25 12:23:08 2019
+//Date        : Fri Jan 25 12:53:44 2019
 //Host        : carotti running 64-bit Ubuntu 18.04.1 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=17,numReposBlks=15,numNonXlnxBlks=3,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_board_cnt=5,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=19,numReposBlks=17,numNonXlnxBlks=3,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=3,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_board_cnt=5,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -93,6 +93,7 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.SYSCLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.SYSCLK, CLK_DOMAIN design_1_sysclk, FREQ_HZ 125000000, PHASE 0.000" *) input sysclk;
 
   wire [23:0]alpha_combine_0_rgb_out;
+  wire [3:0]btn_1;
   wire [0:0]c_shift_ram_0_Q;
   wire [0:0]c_shift_ram_1_Q;
   wire [23:0]c_shift_ram_2_Q;
@@ -109,6 +110,15 @@ module design_1
   wire dvi2rgb_0_vid_pHSync;
   wire dvi2rgb_0_vid_pVDE;
   wire dvi2rgb_0_vid_pVSync;
+  wire [3:0]get_target_wrapper_0_valid_out;
+  wire [10:0]get_target_wrapper_0_xcount0_out;
+  wire [10:0]get_target_wrapper_0_xcount1_out;
+  wire [10:0]get_target_wrapper_0_xcount2_out;
+  wire [10:0]get_target_wrapper_0_xcount3_out;
+  wire [10:0]get_target_wrapper_0_ycount0_out;
+  wire [10:0]get_target_wrapper_0_ycount1_out;
+  wire [10:0]get_target_wrapper_0_ycount2_out;
+  wire [10:0]get_target_wrapper_0_ycount3_out;
   wire hdmi_rx_clk_n_1;
   wire hdmi_rx_clk_p_1;
   wire [2:0]hdmi_rx_d_n_1;
@@ -203,11 +213,15 @@ module design_1
   wire [2:0]rgb2dvi_0_TMDS_Data_p;
   wire [0:0]rst_ps7_0_50M_interconnect_aresetn;
   wire [0:0]rst_ps7_0_50M_peripheral_aresetn;
+  wire [10:0]scene_wrapper_0_hcount;
   wire [31:0]scene_wrapper_0_pixel_data;
+  wire [10:0]scene_wrapper_0_vcount;
   wire sysclk_1;
   wire [0:0]xlconstant_0_dout;
   wire [0:0]xlconstant_1_dout;
+  wire [0:0]xlslice_0_Dout;
 
+  assign btn_1 = btn[3:0];
   assign ddc_0_scl_o = dvi2rgb_0_DDC_SCL_O;
   assign ddc_0_scl_t = dvi2rgb_0_DDC_SCL_T;
   assign ddc_0_sda_o = dvi2rgb_0_DDC_SDA_O;
@@ -268,6 +282,21 @@ module design_1
         .vid_pHSync(dvi2rgb_0_vid_pHSync),
         .vid_pVDE(dvi2rgb_0_vid_pVDE),
         .vid_pVSync(dvi2rgb_0_vid_pVSync));
+  design_1_get_target_wrapper_0_0 get_target_wrapper_0
+       (.clk_in(dvi2rgb_0_PixelClk),
+        .hcount_in(scene_wrapper_0_hcount),
+        .rgb_in(dvi2rgb_0_vid_pData),
+        .rst_in(xlslice_0_Dout),
+        .valid_out(get_target_wrapper_0_valid_out),
+        .vcount_in(scene_wrapper_0_vcount),
+        .xcount0_out(get_target_wrapper_0_xcount0_out),
+        .xcount1_out(get_target_wrapper_0_xcount1_out),
+        .xcount2_out(get_target_wrapper_0_xcount2_out),
+        .xcount3_out(get_target_wrapper_0_xcount3_out),
+        .ycount0_out(get_target_wrapper_0_ycount0_out),
+        .ycount1_out(get_target_wrapper_0_ycount1_out),
+        .ycount2_out(get_target_wrapper_0_ycount2_out),
+        .ycount3_out(get_target_wrapper_0_ycount3_out));
   design_1_processing_system7_0_0 processing_system7_0
        (.DDR_Addr(DDR_addr[14:0]),
         .DDR_BankAddr(DDR_ba[2:0]),
@@ -396,15 +425,15 @@ module design_1
         .S00_AXI_wstrb(processing_system7_0_M_AXI_GP0_WSTRB),
         .S00_AXI_wvalid(processing_system7_0_M_AXI_GP0_WVALID));
   design_1_render_register_0_0 render_register_0
-       (.marker_1_x({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_1_y({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_2_x({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_2_y({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_3_x({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_3_y({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_4_x({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_4_y({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .marker_valid({1'b0,1'b0,1'b0,1'b0}),
+       (.marker_1_x(get_target_wrapper_0_xcount0_out),
+        .marker_1_y(get_target_wrapper_0_ycount0_out),
+        .marker_2_x(get_target_wrapper_0_xcount1_out),
+        .marker_2_y(get_target_wrapper_0_ycount1_out),
+        .marker_3_x(get_target_wrapper_0_xcount2_out),
+        .marker_3_y(get_target_wrapper_0_ycount2_out),
+        .marker_4_x(get_target_wrapper_0_xcount3_out),
+        .marker_4_y(get_target_wrapper_0_ycount3_out),
+        .marker_valid(get_target_wrapper_0_valid_out),
         .s00_axi_aclk(processing_system7_0_FCLK_CLK0),
         .s00_axi_araddr(ps7_0_axi_periph_M00_AXI_ARADDR[5:0]),
         .s00_axi_aresetn(rst_ps7_0_50M_peripheral_aresetn),
@@ -450,18 +479,23 @@ module design_1
         .peripheral_aresetn(rst_ps7_0_50M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
   design_1_scene_wrapper_0_0 scene_wrapper_0
-       (.hsync(dvi2rgb_0_vid_pHSync),
+       (.hcount(scene_wrapper_0_hcount),
+        .hsync(dvi2rgb_0_vid_pHSync),
         .pixel_clk(dvi2rgb_0_PixelClk),
         .pixel_data(scene_wrapper_0_pixel_data),
         .sphere_radius(render_register_0_sphere_radius),
         .sphere_x(render_register_0_sphere_x),
         .sphere_y(render_register_0_sphere_y),
         .sphere_z(render_register_0_sphere_z),
+        .vcount(scene_wrapper_0_vcount),
         .vsync(dvi2rgb_0_vid_pVSync));
   design_1_xlconstant_0_0 xlconstant_0
        (.dout(xlconstant_0_dout));
   design_1_xlconstant_1_0 xlconstant_1
        (.dout(xlconstant_1_dout));
+  design_1_xlslice_0_0 xlslice_0
+       (.Din(btn_1),
+        .Dout(xlslice_0_Dout));
 endmodule
 
 module design_1_ps7_0_axi_periph_0

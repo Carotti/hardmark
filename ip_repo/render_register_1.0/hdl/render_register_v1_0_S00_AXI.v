@@ -19,6 +19,17 @@
 		output [23:0] sphere_y,
 		output [23:0] sphere_z,
 		output [23:0] sphere_radius,
+		
+		input [10:0] marker_1_x,
+		input [10:0] marker_1_y,
+		input [10:0] marker_2_x,
+        input [10:0] marker_2_y,
+        input [10:0] marker_3_x,
+        input [10:0] marker_3_y,
+        input [10:0] marker_4_x,
+        input [10:0] marker_4_y,
+        
+        input [3:0] marker_valid,
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -236,11 +247,11 @@
 	      slv_reg1 <= 0;
 	      slv_reg2 <= 0;
 	      slv_reg3 <= 0;
-	      slv_reg4 <= 0;
-	      slv_reg5 <= 0;
-	      slv_reg6 <= 0;
-	      slv_reg7 <= 0;
-	      slv_reg8 <= 0;
+//	      slv_reg4 <= 0;
+//	      slv_reg5 <= 0;
+//	      slv_reg6 <= 0;
+//	      slv_reg7 <= 0;
+//	      slv_reg8 <= 0;
 	      slv_reg9 <= 0;
 	      slv_reg10 <= 0;
 	      slv_reg11 <= 0;
@@ -282,35 +293,35 @@
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 4
-	                slv_reg4[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+//	                slv_reg4[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
 	          4'h5:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 5
-	                slv_reg5[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+//	                slv_reg5[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
 	          4'h6:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 6
-	                slv_reg6[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+//	                slv_reg6[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
 	          4'h7:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 7
-	                slv_reg7[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+//	                slv_reg7[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
 	          4'h8:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
 	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
 	                // Respective byte enables are asserted as per write strobes 
 	                // Slave register 8
-	                slv_reg8[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+//	                slv_reg8[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
 	          4'h9:
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
@@ -338,11 +349,11 @@
 	                      slv_reg1 <= slv_reg1;
 	                      slv_reg2 <= slv_reg2;
 	                      slv_reg3 <= slv_reg3;
-	                      slv_reg4 <= slv_reg4;
-	                      slv_reg5 <= slv_reg5;
-	                      slv_reg6 <= slv_reg6;
-	                      slv_reg7 <= slv_reg7;
-	                      slv_reg8 <= slv_reg8;
+//	                      slv_reg4 <= slv_reg4;
+//	                      slv_reg5 <= slv_reg5;
+//	                      slv_reg6 <= slv_reg6;
+//	                      slv_reg7 <= slv_reg7;
+//	                      slv_reg8 <= slv_reg8;
 	                      slv_reg9 <= slv_reg9;
 	                      slv_reg10 <= slv_reg10;
 	                      slv_reg11 <= slv_reg11;
@@ -499,6 +510,15 @@
 	assign sphere_y = slv_reg1[23:0];
 	assign sphere_z = slv_reg2[23:0];
 	assign sphere_radius = slv_reg3[23:0];
+	
+	always @( posedge S_AXI_ACLK )
+	begin
+	   slv_reg4 <= {marker_1_x, marker_1_y};
+	   slv_reg5 <= {marker_2_x, marker_2_y};
+	   slv_reg6 <= {marker_3_x, marker_3_y};
+	   slv_reg7 <= {marker_4_x, marker_4_y};
+	   slv_reg8 <= marker_valid;
+	end
 
 	// User logic ends
 

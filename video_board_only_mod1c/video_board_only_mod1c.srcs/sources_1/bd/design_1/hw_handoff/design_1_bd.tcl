@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# alpha_combine, scene_wrapper
+# alpha_combine, get_target_wrapper, scene_wrapper
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -266,6 +266,17 @@ proc create_root_design { parentCell } {
    CONFIG.kClkRange {1} \
  ] $dvi2rgb_0
 
+  # Create instance: get_target_wrapper_0, and set properties
+  set block_name get_target_wrapper
+  set block_cell_name get_target_wrapper_0
+  if { [catch {set get_target_wrapper_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $get_target_wrapper_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
   set_property -dict [ list \
@@ -313,6 +324,14 @@ proc create_root_design { parentCell } {
   # Create instance: xlconstant_1, and set properties
   set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]
 
+  # Create instance: xlslice_0, and set properties
+  set xlslice_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 xlslice_0 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {0} \
+   CONFIG.DIN_TO {0} \
+   CONFIG.DIN_WIDTH {4} \
+ ] $xlslice_0
+
   # Create interface connections
   connect_bd_intf_net -intf_net dvi2rgb_0_DDC [get_bd_intf_ports ddc_0] [get_bd_intf_pins dvi2rgb_0/DDC]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins processing_system7_0/DDR]
@@ -322,16 +341,26 @@ proc create_root_design { parentCell } {
 
   # Create port connections
   connect_bd_net -net alpha_combine_0_rgb_out [get_bd_pins alpha_combine_0/rgb_out] [get_bd_pins rgb2dvi_0/vid_pData]
+  connect_bd_net -net btn_1 [get_bd_ports btn] [get_bd_pins xlslice_0/Din]
   connect_bd_net -net c_shift_ram_0_Q [get_bd_pins c_shift_ram_0/Q] [get_bd_pins rgb2dvi_0/vid_pVDE]
   connect_bd_net -net c_shift_ram_1_Q [get_bd_pins c_shift_ram_1/Q] [get_bd_pins rgb2dvi_0/vid_pVSync]
   connect_bd_net -net c_shift_ram_2_Q [get_bd_pins alpha_combine_0/rgb_in] [get_bd_pins c_shift_ram_2/Q]
   connect_bd_net -net c_shift_ram_3_Q [get_bd_pins c_shift_ram_3/Q] [get_bd_pins rgb2dvi_0/vid_pHSync]
   connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins dvi2rgb_0/RefClk]
-  connect_bd_net -net dvi2rgb_0_PixelClk [get_bd_pins c_shift_ram_0/CLK] [get_bd_pins c_shift_ram_1/CLK] [get_bd_pins c_shift_ram_2/CLK] [get_bd_pins c_shift_ram_3/CLK] [get_bd_pins dvi2rgb_0/PixelClk] [get_bd_pins rgb2dvi_0/PixelClk] [get_bd_pins scene_wrapper_0/pixel_clk]
-  connect_bd_net -net dvi2rgb_0_vid_pData [get_bd_pins c_shift_ram_2/D] [get_bd_pins dvi2rgb_0/vid_pData]
+  connect_bd_net -net dvi2rgb_0_PixelClk [get_bd_pins c_shift_ram_0/CLK] [get_bd_pins c_shift_ram_1/CLK] [get_bd_pins c_shift_ram_2/CLK] [get_bd_pins c_shift_ram_3/CLK] [get_bd_pins dvi2rgb_0/PixelClk] [get_bd_pins get_target_wrapper_0/clk_in] [get_bd_pins rgb2dvi_0/PixelClk] [get_bd_pins scene_wrapper_0/pixel_clk]
+  connect_bd_net -net dvi2rgb_0_vid_pData [get_bd_pins c_shift_ram_2/D] [get_bd_pins dvi2rgb_0/vid_pData] [get_bd_pins get_target_wrapper_0/rgb_in]
   connect_bd_net -net dvi2rgb_0_vid_pHSync [get_bd_pins c_shift_ram_3/D] [get_bd_pins dvi2rgb_0/vid_pHSync] [get_bd_pins scene_wrapper_0/hsync]
   connect_bd_net -net dvi2rgb_0_vid_pVDE [get_bd_pins c_shift_ram_0/D] [get_bd_pins dvi2rgb_0/vid_pVDE]
   connect_bd_net -net dvi2rgb_0_vid_pVSync [get_bd_pins c_shift_ram_1/D] [get_bd_pins dvi2rgb_0/vid_pVSync] [get_bd_pins scene_wrapper_0/vsync]
+  connect_bd_net -net get_target_wrapper_0_valid_out [get_bd_pins get_target_wrapper_0/valid_out] [get_bd_pins render_register_0/marker_valid]
+  connect_bd_net -net get_target_wrapper_0_xcount0_out [get_bd_pins get_target_wrapper_0/xcount0_out] [get_bd_pins render_register_0/marker_1_x]
+  connect_bd_net -net get_target_wrapper_0_xcount1_out [get_bd_pins get_target_wrapper_0/xcount1_out] [get_bd_pins render_register_0/marker_2_x]
+  connect_bd_net -net get_target_wrapper_0_xcount2_out [get_bd_pins get_target_wrapper_0/xcount2_out] [get_bd_pins render_register_0/marker_3_x]
+  connect_bd_net -net get_target_wrapper_0_xcount3_out [get_bd_pins get_target_wrapper_0/xcount3_out] [get_bd_pins render_register_0/marker_4_x]
+  connect_bd_net -net get_target_wrapper_0_ycount0_out [get_bd_pins get_target_wrapper_0/ycount0_out] [get_bd_pins render_register_0/marker_1_y]
+  connect_bd_net -net get_target_wrapper_0_ycount1_out [get_bd_pins get_target_wrapper_0/ycount1_out] [get_bd_pins render_register_0/marker_2_y]
+  connect_bd_net -net get_target_wrapper_0_ycount2_out [get_bd_pins get_target_wrapper_0/ycount2_out] [get_bd_pins render_register_0/marker_3_y]
+  connect_bd_net -net get_target_wrapper_0_ycount3_out [get_bd_pins get_target_wrapper_0/ycount3_out] [get_bd_pins render_register_0/marker_4_y]
   connect_bd_net -net hdmi_rx_clk_n_1 [get_bd_ports hdmi_rx_clk_n] [get_bd_pins dvi2rgb_0/TMDS_Clk_n]
   connect_bd_net -net hdmi_rx_clk_p_1 [get_bd_ports hdmi_rx_clk_p] [get_bd_pins dvi2rgb_0/TMDS_Clk_p]
   connect_bd_net -net hdmi_rx_d_n_1 [get_bd_ports hdmi_rx_d_n] [get_bd_pins dvi2rgb_0/TMDS_Data_n]
@@ -348,10 +377,13 @@ proc create_root_design { parentCell } {
   connect_bd_net -net rgb2dvi_0_TMDS_Data_p [get_bd_ports hdmi_tx_d_p] [get_bd_pins rgb2dvi_0/TMDS_Data_p]
   connect_bd_net -net rst_ps7_0_50M_interconnect_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins rst_ps7_0_50M/interconnect_aresetn]
   connect_bd_net -net rst_ps7_0_50M_peripheral_aresetn [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins render_register_0/s00_axi_aresetn] [get_bd_pins rst_ps7_0_50M/peripheral_aresetn]
+  connect_bd_net -net scene_wrapper_0_hcount [get_bd_pins get_target_wrapper_0/hcount_in] [get_bd_pins scene_wrapper_0/hcount]
   connect_bd_net -net scene_wrapper_0_pixel_data [get_bd_pins alpha_combine_0/rgba_in] [get_bd_pins scene_wrapper_0/pixel_data]
+  connect_bd_net -net scene_wrapper_0_vcount [get_bd_pins get_target_wrapper_0/vcount_in] [get_bd_pins scene_wrapper_0/vcount]
   connect_bd_net -net sysclk_1 [get_bd_ports sysclk] [get_bd_pins clk_wiz_0/clk_in1]
   connect_bd_net -net xlconstant_0_dout [get_bd_pins clk_wiz_0/reset] [get_bd_pins dvi2rgb_0/aRst] [get_bd_pins dvi2rgb_0/pRst] [get_bd_pins xlconstant_0/dout]
   connect_bd_net -net xlconstant_1_dout [get_bd_ports hdmi_rx_hpd] [get_bd_ports hdmi_tx_hpdn] [get_bd_pins xlconstant_1/dout]
+  connect_bd_net -net xlslice_0_Dout [get_bd_pins get_target_wrapper_0/rst_in] [get_bd_pins xlslice_0/Dout]
 
   # Create address segments
   create_bd_addr_seg -range 0x00010000 -offset 0x43C00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs render_register_0/S00_AXI/S00_AXI_reg] SEG_render_register_0_S00_AXI_reg

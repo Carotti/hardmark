@@ -62,7 +62,9 @@ module design_1_scene_wrapper_0_0 (
   sphere_y,
   sphere_z,
   sphere_radius,
-  pixel_data
+  pixel_data,
+  hcount,
+  vcount
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME pixel_clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_dvi2rgb_0_0_PixelClk" *)
@@ -75,6 +77,8 @@ input wire [23 : 0] sphere_y;
 input wire [23 : 0] sphere_z;
 input wire [23 : 0] sphere_radius;
 output wire [31 : 0] pixel_data;
+output wire [10 : 0] hcount;
+output wire [10 : 0] vcount;
 
   scene_wrapper inst (
     .pixel_clk(pixel_clk),
@@ -84,6 +88,8 @@ output wire [31 : 0] pixel_data;
     .sphere_y(sphere_y),
     .sphere_z(sphere_z),
     .sphere_radius(sphere_radius),
-    .pixel_data(pixel_data)
+    .pixel_data(pixel_data),
+    .hcount(hcount),
+    .vcount(vcount)
   );
 endmodule

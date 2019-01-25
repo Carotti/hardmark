@@ -19,6 +19,17 @@
         output [23:0] sphere_y,
         output [23:0] sphere_z,
         output [23:0] sphere_radius,
+        
+        input [10:0] marker_1_x,
+        input [10:0] marker_1_y,
+        input [10:0] marker_2_x,
+        input [10:0] marker_2_y,
+        input [10:0] marker_3_x,
+        input [10:0] marker_3_y,
+        input [10:0] marker_4_x,
+        input [10:0] marker_4_y,
+        
+        input [3:0] marker_valid,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -55,6 +66,14 @@
 	    .sphere_y(sphere_y),
 	    .sphere_z(sphere_z),
 	    .sphere_radius(sphere_radius),
+	    .marker_1_x(marker_1_x),
+        .marker_1_y(marker_1_y),
+	    .marker_2_x(marker_2_x),
+        .marker_2_y(marker_2_y),
+        .marker_3_x(marker_3_x),
+        .marker_3_y(marker_3_y),
+        .marker_4_x(marker_4_x),
+        .marker_4_y(marker_4_y),
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
 		.S_AXI_AWADDR(s00_axi_awaddr),

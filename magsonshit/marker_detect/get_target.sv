@@ -27,16 +27,16 @@ module get_target(	clk_in,
 	input [$clog2(SCREEN_WIDTH):0] hcount_in;
 	input [$clog2(SCREEN_HEIGHT):0] vcount_in;
 	input [2:0] rgb_in;
-	output logic [$clog2(SCREEN_WIDTH):0] xcount_out [NUM_TARGETS-1:0];
-	output logic [$clog2(SCREEN_HEIGHT):0] ycount_out [NUM_TARGETS-1:0];
-	output logic [$clog2(SCREEN_HEIGHT):0] diameter_out [NUM_TARGETS-1:0];
-	output logic valid_out [NUM_TARGETS-1:0];
+	output logic [$clog2(SCREEN_WIDTH)-1:0] [NUM_TARGETS-1:0] xcount_out;
+	output logic [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] ycount_out;
+	output logic [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] diameter_out;
+	output logic [NUM_TARGETS-1:0] valid_out ;
 
 	logic detected_in_row;
 	logic [10:0] nt_prob;
 	logic [10:0] nt_min_probabilities [NUM_TARGETS-1:0];
 	logic [3:0] number_of_flips;
-	logic [$clog2(SCREEN_WIDTH):0] centre_temp;
+	logic [$clog2(SCREEN_WIDTH)-1:0] centre_temp;
 	logic [$clog2(SCREEN_HEIGHT):0] diameter_temp;
 	logic [NUM_TARGETS_BITS-1:0] next_target = 0;
 	logic [2*$clog2(SCREEN_HEIGHT):0] diameter_sq [NUM_TARGETS-1:0];
@@ -56,7 +56,7 @@ module get_target(	clk_in,
 						.done_out(detected_in_row) );
 
 	logic old_target;
-	always_ff @(posedge clk_in or posedge rst_in)
+	always_ff @(posedge clk_in)
 	begin
 		if (rst_in)
 		begin

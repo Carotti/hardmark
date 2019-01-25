@@ -35,16 +35,18 @@ module get_target_wrapper(clk_in,
 	localparam AVERAGE_BITS = $clog2(AVERAGE_OVER);
 	parameter MIN_THRES = 50;
 	parameter MAX_THRES = 200;
+	
+	parameter NUM_TARGETS = 4;
 	input clk_in, rst_in;
 	input [((COLOUR_DEPTH*3)-1):0] rgb_in;
 
-	input [$clog2(SCREEN_WIDTH):0] hcount_in;
+	input [$clog2(SCREEN_WIDTH)-1:0] hcount_in;
 	input [$clog2(SCREEN_HEIGHT):0] vcount_in;
 
-	output [$clog2(SCREEN_WIDTH):0] xcount0_out;
-	output [$clog2(SCREEN_WIDTH):0] xcount1_out;
-	output [$clog2(SCREEN_WIDTH):0] xcount2_out;
-	output [$clog2(SCREEN_WIDTH):0] xcount3_out;
+	output [$clog2(SCREEN_WIDTH)-1:0] xcount0_out;
+	output [$clog2(SCREEN_WIDTH)-1:0] xcount1_out;
+	output [$clog2(SCREEN_WIDTH)-1:0] xcount2_out;
+	output [$clog2(SCREEN_WIDTH)-1:0] xcount3_out;
 	output [$clog2(SCREEN_HEIGHT):0] ycount0_out;
 	output [$clog2(SCREEN_HEIGHT):0] ycount1_out;
 	output [$clog2(SCREEN_HEIGHT):0] ycount2_out;
@@ -55,10 +57,10 @@ module get_target_wrapper(clk_in,
 	output [$clog2(SCREEN_HEIGHT):0] diameter3_out;
 	output [3:0] valid_out;
 
-	wire [$clog2(SCREEN_WIDTH):0] xcount [NUM_TARGETS-1:0];
-	wire [$clog2(SCREEN_HEIGHT):0] ycount [NUM_TARGETS-1:0];
-	wire [$clog2(SCREEN_HEIGHT):0] diameter [NUM_TARGETS-1:0];
-	wire valid [NUM_TARGETS-1:0];
+	wire [$clog2(SCREEN_WIDTH)-1:0] [NUM_TARGETS-1:0] xcount;
+	wire [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] ycount;
+	wire [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] diameter;
+	wire [NUM_TARGETS-1:0] valid;
 	wire [2:0] compressed;
 
 	assign valid_out = {valid[0], valid[1], valid[2], valid[3]};

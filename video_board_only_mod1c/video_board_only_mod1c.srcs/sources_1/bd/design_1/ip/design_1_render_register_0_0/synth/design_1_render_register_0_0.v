@@ -48,7 +48,7 @@
 
 
 // IP VLNV: nippy.org:nippy:render_register:1.0
-// IP Revision: 7
+// IP Revision: 8
 
 (* X_CORE_INFO = "render_register_v1_0,Vivado 2018.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_render_register_0_0,render_register_v1_0,{}" *)
