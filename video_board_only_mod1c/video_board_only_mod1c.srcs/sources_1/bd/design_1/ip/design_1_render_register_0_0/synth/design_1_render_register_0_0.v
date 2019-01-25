@@ -48,7 +48,7 @@
 
 
 // IP VLNV: nippy.org:nippy:render_register:1.0
-// IP Revision: 6
+// IP Revision: 7
 
 (* X_CORE_INFO = "render_register_v1_0,Vivado 2018.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_render_register_0_0,render_register_v1_0,{}" *)
@@ -58,6 +58,15 @@ module design_1_render_register_0_0 (
   sphere_y,
   sphere_z,
   sphere_radius,
+  marker_1_x,
+  marker_1_y,
+  marker_2_x,
+  marker_2_y,
+  marker_3_x,
+  marker_3_y,
+  marker_4_x,
+  marker_4_y,
+  marker_valid,
   s00_axi_aclk,
   s00_axi_aresetn,
   s00_axi_awaddr,
@@ -85,6 +94,15 @@ output wire [23 : 0] sphere_x;
 output wire [23 : 0] sphere_y;
 output wire [23 : 0] sphere_z;
 output wire [23 : 0] sphere_radius;
+input wire [10 : 0] marker_1_x;
+input wire [10 : 0] marker_1_y;
+input wire [10 : 0] marker_2_x;
+input wire [10 : 0] marker_2_y;
+input wire [10 : 0] marker_3_x;
+input wire [10 : 0] marker_3_y;
+input wire [10 : 0] marker_4_x;
+input wire [10 : 0] marker_4_y;
+input wire [3 : 0] marker_valid;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s00_axi_aclk, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 50000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 s00_axi_aclk CLK" *)
 input wire s00_axi_aclk;
@@ -140,6 +158,15 @@ input wire s00_axi_rready;
     .sphere_y(sphere_y),
     .sphere_z(sphere_z),
     .sphere_radius(sphere_radius),
+    .marker_1_x(marker_1_x),
+    .marker_1_y(marker_1_y),
+    .marker_2_x(marker_2_x),
+    .marker_2_y(marker_2_y),
+    .marker_3_x(marker_3_x),
+    .marker_3_y(marker_3_y),
+    .marker_4_x(marker_4_x),
+    .marker_4_y(marker_4_y),
+    .marker_valid(marker_valid),
     .s00_axi_aclk(s00_axi_aclk),
     .s00_axi_aresetn(s00_axi_aresetn),
     .s00_axi_awaddr(s00_axi_awaddr),
