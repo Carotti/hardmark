@@ -1,5 +1,6 @@
 module get_target(	clk_in,
 					rst_in,
+					vsync_in,
 					hcount_in,
 					vcount_in,
 					rgb_in,
@@ -16,20 +17,21 @@ module get_target(	clk_in,
 	`define DIFF(A, B)\
 		((A < B) ? (B - A) : (A - B))
 
-	`define DIST_SQ(X1, X2, Y1, Y2) \
-		(`DIFF(X1, X2)*`DIFF(X1, X2) + `DIFF(Y1, Y2)*`DIFF(Y1, Y2))
+	`define DIST_APPROX(X1, X2, Y1, Y2) \
+		(`DIFF(X1, X2) + `DIFF(Y1, Y2))
 
-	`define SQ(X) \
-		(X*X)
+	`define SQ_APPROX(X) \
+		(X << 1)
 
 	input clk_in;
 	input rst_in;
+	input vsync_in;
 	input [$clog2(SCREEN_WIDTH):0] hcount_in;
 	input [$clog2(SCREEN_HEIGHT):0] vcount_in;
 	input [2:0] rgb_in;
-	output logic [$clog2(SCREEN_WIDTH)-1:0] [NUM_TARGETS-1:0] xcount_out;
-	output logic [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] ycount_out;
-	output logic [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] diameter_out;
+	output logic [NUM_TARGETS-1:0][$clog2(SCREEN_WIDTH)-1:0] xcount_out;
+	output logic [NUM_TARGETS-1:0][$clog2(SCREEN_HEIGHT):0] ycount_out;
+	output logic [NUM_TARGETS-1:0][$clog2(SCREEN_HEIGHT):0] diameter_out;
 	output logic [NUM_TARGETS-1:0] valid_out ;
 
 	logic detected_in_row;
@@ -41,12 +43,23 @@ module get_target(	clk_in,
 	logic [NUM_TARGETS_BITS-1:0] next_target = 0;
 	logic [2*$clog2(SCREEN_HEIGHT):0] diameter_sq [NUM_TARGETS-1:0];
 	logic [2*$clog2(SCREEN_HEIGHT):0] dist_sq [NUM_TARGETS-1:0];
-	logic vsync;
+	logic [2*$clog2(SCREEN_HEIGHT):0] inside_target;
 
-	assign vsync = (hcount_in == 0);
+	genvar num_target;
+	generate
+		for (num_target = 0; num_target < NUM_TARGETS; num_target=num_target+1)
+		begin
+			assign dist_sq[num_target] = valid_out[num_target] ? `DIST_APPROX(xcount_out[num_target], centre_temp, ycount_out[num_target], vcount_in) : 0;
+			assign diameter_sq[num_target] = valid_out[num_target] ? `SQ_APPROX(diameter_out[num_target]) : 0;
+			assign inside_target[num_target] = valid_out[num_target] ? (dist_sq[num_target] <= diameter_sq[num_target]) : 0;
+		end
+	endgenerate
+
+	logic new_target;
+	assign new_target = ~(|inside_target);
 
 	count_flips cf1(	.clk_in(clk_in),
-						.rst_in(vsync),
+						.rst_in(vsync_in),
 						.hcount_in(hcount_in),
 						.rgb_in(rgb_in),
 						.number_of_flips_out(number_of_flips),
@@ -55,49 +68,39 @@ module get_target(	clk_in,
 						.nt_probability_out(nt_prob),
 						.done_out(detected_in_row) );
 
-	logic old_target;
 	always_ff @(posedge clk_in)
 	begin
 		if (rst_in)
 		begin
-			for (int i = 0; i < NUM_TARGETS; ++i)
-			begin
-				valid_out[i] = 0;
-			end
+			valid_out <= 0;
 		end
-
-		if (detected_in_row)
+		else
 		begin
-			old_target = 1'b0;
-			for (int target_num = 0; target_num < NUM_TARGETS; ++target_num)
+			if (detected_in_row)
 			begin
-				dist_sq[target_num] = `DIST_SQ(xcount_out[target_num], centre_temp, ycount_out[target_num], vcount_in);
-				diameter_sq[target_num] = `SQ(diameter_out[target_num]);
-				if 	(	(dist_sq[target_num] <= diameter_sq[target_num])
-					&& 	((nt_prob < nt_min_probabilities[target_num]) || ((~valid_out[target_num]) && (next_target == target_num)))
-					&&  (~old_target)
-					)
+				for (int target_num = 0; target_num < NUM_TARGETS; ++target_num)
 				begin
-					xcount_out[target_num] 				= centre_temp;
-					ycount_out[target_num] 				= vcount_in;
-					diameter_out[target_num] 			= diameter_temp;
-					nt_min_probabilities[target_num]	= nt_prob;
-					valid_out[target_num]				= 1'b1;
+					if 	(	(inside_target[target_num])
+						&& 	((nt_prob < nt_min_probabilities[target_num]) || ((~valid_out[target_num]) && (next_target == target_num)))
+						)
+					begin
+						xcount_out[target_num] 				<= centre_temp;
+						ycount_out[target_num] 				<= vcount_in;
+						diameter_out[target_num] 			<= diameter_temp;
+						nt_min_probabilities[target_num]	<= nt_prob;
+						valid_out[target_num]				<= 1'b1;
+					end
 				end
-				if 	(dist_sq[target_num] <= diameter_sq[target_num])
-				begin
-					old_target							= 1'b1;
-				end
-			end
 
-			if (~old_target)
-			begin
-				xcount_out[next_target] 			= centre_temp;
-				ycount_out[next_target] 			= vcount_in;
-				diameter_out[next_target] 			= diameter_temp;
-				nt_min_probabilities[next_target]	= nt_prob;
-				valid_out[next_target]				= 1'b1;
-				next_target							= next_target + 1;
+				if (new_target)
+				begin
+					xcount_out[next_target] 			<= centre_temp;
+					ycount_out[next_target] 			<= vcount_in;
+					diameter_out[next_target] 			<= diameter_temp;
+					nt_min_probabilities[next_target]	<= nt_prob;
+					valid_out[next_target]				<= 1'b1;
+					next_target							<= next_target + 1;
+				end
 			end
 		end
 	end

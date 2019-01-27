@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: digilentinc.com:ip:dvi2rgb:1.9
--- IP Revision: 2
+-- IP Revision: 1
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;

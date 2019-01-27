@@ -1,5 +1,6 @@
 module get_target_wrapper(clk_in,
 					rst_in,
+					vsync_in,
 					rgb_in,
 					hcount_in,
 					vcount_in,
@@ -31,13 +32,13 @@ module get_target_wrapper(clk_in,
 	parameter SCREEN_HEIGHT = 720;
 
 	parameter COLOUR_DEPTH = 8;
-	parameter AVERAGE_OVER = 1024;
+	parameter AVERAGE_OVER = 720;
 	localparam AVERAGE_BITS = $clog2(AVERAGE_OVER);
 	parameter MIN_THRES = 50;
 	parameter MAX_THRES = 200;
 	
 	parameter NUM_TARGETS = 4;
-	input clk_in, rst_in;
+	input clk_in, rst_in, vsync_in;
 	input [((COLOUR_DEPTH*3)-1):0] rgb_in;
 
 	input [$clog2(SCREEN_WIDTH)-1:0] hcount_in;
@@ -57,9 +58,9 @@ module get_target_wrapper(clk_in,
 	output [$clog2(SCREEN_HEIGHT):0] diameter3_out;
 	output [3:0] valid_out;
 
-	wire [$clog2(SCREEN_WIDTH)-1:0] [NUM_TARGETS-1:0] xcount;
-	wire [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] ycount;
-	wire [$clog2(SCREEN_HEIGHT):0] [NUM_TARGETS-1:0] diameter;
+	wire [NUM_TARGETS-1:0][$clog2(SCREEN_WIDTH)-1:0] xcount;
+	wire [NUM_TARGETS-1:0][$clog2(SCREEN_HEIGHT):0] ycount;
+	wire [NUM_TARGETS-1:0][$clog2(SCREEN_HEIGHT):0] diameter;
 	wire [NUM_TARGETS-1:0] valid;
 	wire [2:0] compressed;
 
@@ -81,6 +82,7 @@ module get_target_wrapper(clk_in,
 	rgb_compress #(.COLOUR_DEPTH(COLOUR_DEPTH), .AVERAGE_OVER(AVERAGE_OVER), .MIN_THRES(MIN_THRES), .MAX_THRES(MAX_THRES)) rgbc1 (.clk_in(clk_in), .rgb_in(rgb_in), .compressed_out(compressed));
 	get_target #(.NUM_TARGETS(4), .SCREEN_HEIGHT(SCREEN_HEIGHT), .SCREEN_WIDTH(SCREEN_WIDTH)) gt1 (.clk_in(clk_in),
 						.rst_in(rst_in),
+						.vsync_in(vsync_in),
 						.hcount_in(hcount_in),
 						.vcount_in(vcount_in),
 						.rgb_in(compressed),

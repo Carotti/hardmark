@@ -47,7 +47,7 @@
 -- DO NOT MODIFY THIS FILE.
 
 -- IP VLNV: digilentinc.com:ip:rgb2dvi:1.4
--- IP Revision: 8
+-- IP Revision: 7
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
@@ -103,7 +103,7 @@ ARCHITECTURE design_1_rgb2dvi_0_0_arch OF design_1_rgb2dvi_0_0 IS
   ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_rgb2dvi_0_0_arch : ARCHITECTURE IS "design_1_rgb2dvi_0_0,rgb2dvi,{}";
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
-  ATTRIBUTE X_INTERFACE_PARAMETER OF PixelClk: SIGNAL IS "XIL_INTERFACENAME PixelClk, FREQ_HZ 100000000, PHASE 0.000";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF PixelClk: SIGNAL IS "XIL_INTERFACENAME PixelClk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_dvi2rgb_0_0_PixelClk";
   ATTRIBUTE X_INTERFACE_INFO OF PixelClk: SIGNAL IS "xilinx.com:signal:clock:1.0 PixelClk CLK";
   ATTRIBUTE X_INTERFACE_INFO OF vid_pVSync: SIGNAL IS "xilinx.com:interface:vid_io:1.0 RGB VSYNC";
   ATTRIBUTE X_INTERFACE_INFO OF vid_pHSync: SIGNAL IS "xilinx.com:interface:vid_io:1.0 RGB HSYNC";

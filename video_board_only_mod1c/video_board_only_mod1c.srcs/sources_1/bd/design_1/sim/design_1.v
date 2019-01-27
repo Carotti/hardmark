@@ -1,15 +1,15 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-//Date        : Fri Jan 25 12:53:44 2019
-//Host        : carotti running 64-bit Ubuntu 18.04.1 LTS
+//Date        : Sun Jan 27 18:06:52 2019
+//Host        : eecs-digital-18 running 64-bit Ubuntu 14.04.5 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
 //Purpose     : IP block netlist
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=19,numReposBlks=17,numNonXlnxBlks=3,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=3,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_board_cnt=5,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=19,numReposBlks=17,numNonXlnxBlks=3,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=3,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_board_cnt=5,da_ps7_cnt=1,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -79,8 +79,8 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:interface:iic:1.0 ddc_0 SDA_I" *) input ddc_0_sda_i;
   (* X_INTERFACE_INFO = "xilinx.com:interface:iic:1.0 ddc_0 SDA_O" *) output ddc_0_sda_o;
   (* X_INTERFACE_INFO = "xilinx.com:interface:iic:1.0 ddc_0 SDA_T" *) output ddc_0_sda_t;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_N CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_N, CLK_DOMAIN design_1_hdmi_tx_clk_n, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_n;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_P CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_P, CLK_DOMAIN design_1_hdmi_tx_clk_p, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_p;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_N CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_N, CLK_DOMAIN design_1_hdmi_rx_clk_n, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_n;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_P CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_P, CLK_DOMAIN design_1_hdmi_rx_clk_p, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_p;
   (* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 DATA.HDMI_RX_D_N DATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DATA.HDMI_RX_D_N, LAYERED_METADATA undef" *) input [2:0]hdmi_rx_d_n;
   (* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 DATA.HDMI_RX_D_P DATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DATA.HDMI_RX_D_P, LAYERED_METADATA undef" *) input [2:0]hdmi_rx_d_p;
   output [0:0]hdmi_rx_hpd;
@@ -289,6 +289,7 @@ module design_1
         .rst_in(xlslice_0_Dout),
         .valid_out(get_target_wrapper_0_valid_out),
         .vcount_in(scene_wrapper_0_vcount),
+        .vsync_in(dvi2rgb_0_vid_pVSync),
         .xcount0_out(get_target_wrapper_0_xcount0_out),
         .xcount1_out(get_target_wrapper_0_xcount1_out),
         .xcount2_out(get_target_wrapper_0_xcount2_out),

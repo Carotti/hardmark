@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="38" Path="/home/carotti/Documents/EIE4/6.s193/hardmark/hardmark.xpr">
+<Project Version="7" Minor="38" Path="/afs/athena.mit.edu/user/m/a/magson/Documents/hardmark/hardmark.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="ec264aa92ffc440fa6df03e5147188bb"/>
@@ -74,26 +74,26 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
-        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xvga_0_0/hardmark_top_xvga_0_0.xci">
-          <Proxy FileSetName="hardmark_top_xvga_0_0"/>
-        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_clk_wiz_0_0/hardmark_top_clk_wiz_0_0.xci">
           <Proxy FileSetName="hardmark_top_clk_wiz_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_rgb2dvi_0_0/hardmark_top_rgb2dvi_0_0.xci">
           <Proxy FileSetName="hardmark_top_rgb2dvi_0_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconstant_3_0/hardmark_top_xlconstant_3_0.xci">
-          <Proxy FileSetName="hardmark_top_xlconstant_3_0"/>
+        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xvga_0_0/hardmark_top_xvga_0_0.xci">
+          <Proxy FileSetName="hardmark_top_xvga_0_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconcat_1_0/hardmark_top_xlconcat_1_0.xci">
-          <Proxy FileSetName="hardmark_top_xlconcat_1_0"/>
+        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconstant_2_0_1/hardmark_top_xlconstant_2_0.xci">
+          <Proxy FileSetName="hardmark_top_xlconstant_2_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconcat_0_0_1/hardmark_top_xlconcat_0_0.xci">
           <Proxy FileSetName="hardmark_top_xlconcat_0_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconstant_2_0_1/hardmark_top_xlconstant_2_0.xci">
-          <Proxy FileSetName="hardmark_top_xlconstant_2_0"/>
+        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconcat_1_0/hardmark_top_xlconcat_1_0.xci">
+          <Proxy FileSetName="hardmark_top_xlconcat_1_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconstant_3_0/hardmark_top_xlconstant_3_0.xci">
+          <Proxy FileSetName="hardmark_top_xlconstant_3_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="hardmark_top.bd" FileRelPathName="ip/hardmark_top_xlconcat_2_0/hardmark_top_xlconcat_2_0.xci">
           <Proxy FileSetName="hardmark_top_xlconcat_2_0"/>
@@ -265,9 +265,7 @@
     </Run>
     <Run Id="hardmark_top_xlconstant_2_0_synth_1" Type="Ft3:Synth" SrcSet="hardmark_top_xlconstant_2_0" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconstant_2_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/hardmark_top_xlconstant_2_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -276,9 +274,7 @@
     </Run>
     <Run Id="hardmark_top_xlconstant_3_0_synth_1" Type="Ft3:Synth" SrcSet="hardmark_top_xlconstant_3_0" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconstant_3_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/hardmark_top_xlconstant_3_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -287,9 +283,7 @@
     </Run>
     <Run Id="hardmark_top_xlconcat_1_0_synth_1" Type="Ft3:Synth" SrcSet="hardmark_top_xlconcat_1_0" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconcat_1_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/hardmark_top_xlconcat_1_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -298,9 +292,7 @@
     </Run>
     <Run Id="hardmark_top_xlconcat_0_0_synth_1" Type="Ft3:Synth" SrcSet="hardmark_top_xlconcat_0_0" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconcat_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/hardmark_top_xlconcat_0_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -309,9 +301,7 @@
     </Run>
     <Run Id="hardmark_top_xlconcat_2_0_synth_1" Type="Ft3:Synth" SrcSet="hardmark_top_xlconcat_2_0" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconcat_2_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/hardmark_top_xlconcat_2_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -320,9 +310,7 @@
     </Run>
     <Run Id="hardmark_top_xlconstant_4_0_synth_1" Type="Ft3:Synth" SrcSet="hardmark_top_xlconstant_4_0" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconstant_4_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/hardmark_top_xlconstant_4_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -396,9 +384,7 @@
     </Run>
     <Run Id="hardmark_top_xlconstant_2_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconstant_2_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="hardmark_top_xlconstant_2_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -414,9 +400,7 @@
     </Run>
     <Run Id="hardmark_top_xlconstant_3_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconstant_3_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="hardmark_top_xlconstant_3_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -432,9 +416,7 @@
     </Run>
     <Run Id="hardmark_top_xlconcat_1_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconcat_1_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="hardmark_top_xlconcat_1_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -450,9 +432,7 @@
     </Run>
     <Run Id="hardmark_top_xlconcat_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconcat_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="hardmark_top_xlconcat_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -468,9 +448,7 @@
     </Run>
     <Run Id="hardmark_top_xlconcat_2_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconcat_2_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="hardmark_top_xlconcat_2_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -486,9 +464,7 @@
     </Run>
     <Run Id="hardmark_top_xlconstant_4_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="hardmark_top_xlconstant_4_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="hardmark_top_xlconstant_4_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
