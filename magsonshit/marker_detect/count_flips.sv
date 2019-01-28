@@ -9,11 +9,11 @@ module count_flips(	clk_in, // pixel clock
 					done_out // goes high when all bands for a target has been detected
 				  );
 	// maximum stripe width measured in number of pixels
-	parameter MAX_WIDTH = 100;
+	parameter MAX_WIDTH = 150;
 	// minimum stripe width measured in number of pixels
 	parameter MIN_WIDTH = 5;
 	// maximum difference in stripe width for the same target
-	parameter MAX_WIDTH_DIFF = 40;
+	parameter MAX_WIDTH_DIFF = 50;
 	// the minimum number of bits which must be high in rgb_in in order for the pixel to classify as white
 	parameter WHITE_THRES = 2;
 	// the maximum number of bits which must be high in rgb_in in order for the pixel to classify as black
@@ -147,7 +147,7 @@ module count_flips(	clk_in, // pixel clock
 
 
 	assign is_black = (rgb_in[0] + rgb_in[1] + rgb_in[2] <= BLACK_THRES);
-	assign is_white = (rgb_in[0] + rgb_in[1] + rgb_in[2] >  WHITE_THRES);
+	assign is_white = (rgb_in[0] + rgb_in[1] + rgb_in[2] >=  WHITE_THRES);
 	// the number of black-white flips is 5, the difference between the current and last stripe width is less than MAX_WIDTH_DIFF
 	// the previous region colour was black
 	assign is_centre_region = 	(		(number_of_flips_out == 5)

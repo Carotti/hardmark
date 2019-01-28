@@ -57,7 +57,6 @@
 module design_1_get_target_wrapper_0_0 (
   clk_in,
   rst_in,
-  vsync_in,
   rgb_in,
   hcount_in,
   vcount_in,
@@ -78,7 +77,6 @@ module design_1_get_target_wrapper_0_0 (
 
 input wire clk_in;
 input wire rst_in;
-input wire vsync_in;
 input wire [23 : 0] rgb_in;
 input wire [10 : 0] hcount_in;
 input wire [10 : 0] vcount_in;
@@ -105,14 +103,13 @@ output wire [3 : 0] valid_out;
     .SCREEN_WIDTH(1280),
     .SCREEN_HEIGHT(720),
     .COLOUR_DEPTH(8),
-    .AVERAGE_OVER(512),
+    .AVERAGE_OVER(720),
     .MIN_THRES(50),
     .MAX_THRES(200),
     .NUM_TARGETS(4)
   ) inst (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .vsync_in(vsync_in),
     .rgb_in(rgb_in),
     .hcount_in(hcount_in),
     .vcount_in(vcount_in),

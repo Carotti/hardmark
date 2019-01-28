@@ -276,10 +276,7 @@ proc create_root_design { parentCell } {
      catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
    }
-    set_property -dict [ list \
-   CONFIG.AVERAGE_OVER {512} \
- ] $get_target_wrapper_0
-
+  
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
   set_property -dict [ list \
@@ -354,7 +351,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net dvi2rgb_0_vid_pData [get_bd_pins c_shift_ram_2/D] [get_bd_pins dvi2rgb_0/vid_pData] [get_bd_pins get_target_wrapper_0/rgb_in]
   connect_bd_net -net dvi2rgb_0_vid_pHSync [get_bd_pins c_shift_ram_3/D] [get_bd_pins dvi2rgb_0/vid_pHSync] [get_bd_pins scene_wrapper_0/hsync]
   connect_bd_net -net dvi2rgb_0_vid_pVDE [get_bd_pins c_shift_ram_0/D] [get_bd_pins dvi2rgb_0/vid_pVDE]
-  connect_bd_net -net dvi2rgb_0_vid_pVSync [get_bd_pins c_shift_ram_1/D] [get_bd_pins dvi2rgb_0/vid_pVSync] [get_bd_pins get_target_wrapper_0/vsync_in] [get_bd_pins scene_wrapper_0/vsync]
+  connect_bd_net -net dvi2rgb_0_vid_pVSync [get_bd_pins c_shift_ram_1/D] [get_bd_pins dvi2rgb_0/vid_pVSync] [get_bd_pins scene_wrapper_0/vsync]
   connect_bd_net -net get_target_wrapper_0_valid_out [get_bd_pins get_target_wrapper_0/valid_out] [get_bd_pins render_register_0/marker_valid]
   connect_bd_net -net get_target_wrapper_0_xcount0_out [get_bd_pins get_target_wrapper_0/xcount0_out] [get_bd_pins render_register_0/marker_1_x]
   connect_bd_net -net get_target_wrapper_0_xcount1_out [get_bd_pins get_target_wrapper_0/xcount1_out] [get_bd_pins render_register_0/marker_2_x]

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x9396CF30F1446E3F" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="None" bd:tool_version="2018.2" bd:top="design_1" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x9396CF30F1446E3F" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2018.2" bd:top="design_1" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -190,7 +190,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>CLK_DOMAIN</spirit:name>
-            <spirit:value>design_1_hdmi_rx_clk_p</spirit:value>
+            <spirit:value>design_1_hdmi_tx_clk_p</spirit:value>
             <spirit:vendorExtensions>
               <bd:configElementInfos>
                 <bd:configElementInfo bd:valueSource="default"/>
@@ -237,7 +237,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>CLK_DOMAIN</spirit:name>
-            <spirit:value>design_1_hdmi_rx_clk_n</spirit:value>
+            <spirit:value>design_1_hdmi_tx_clk_n</spirit:value>
             <spirit:vendorExtensions>
               <bd:configElementInfos>
                 <bd:configElementInfo bd:valueSource="default"/>
@@ -595,7 +595,7 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>hdmi_rx_hpd</spirit:name>
+          <spirit:name>hdmi_tx_hpdn</spirit:name>
           <spirit:wire>
             <spirit:direction>out</spirit:direction>
             <spirit:vector>
@@ -605,7 +605,7 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>hdmi_tx_hpdn</spirit:name>
+          <spirit:name>hdmi_rx_hpd</spirit:name>
           <spirit:wire>
             <spirit:direction>out</spirit:direction>
             <spirit:vector>
@@ -680,6 +680,22 @@
           <spirit:configurableElementValue spirit:referenceId="MMCM_CLKOUT0_DIVIDE_F">5</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="CLKOUT1_JITTER">109.241</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="CLKOUT1_PHASE_ERROR">96.948</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>dvi2rgb_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="ip" spirit:name="dvi2rgb" spirit:vendor="digilentinc.com" spirit:version="1.9"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_dvi2rgb_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="kClkRange">1</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>rgb2dvi_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="ip" spirit:name="rgb2dvi" spirit:vendor="digilentinc.com" spirit:version="1.4"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_rgb2dvi_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="kClkRange">1</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
@@ -772,29 +788,6 @@
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
-        <spirit:instanceName>render_register_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="nippy" spirit:name="render_register" spirit:vendor="nippy.org" spirit:version="1.0"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_render_register_0_0</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
-        <spirit:instanceName>dvi2rgb_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="ip" spirit:name="dvi2rgb" spirit:vendor="digilentinc.com" spirit:version="1.9"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_dvi2rgb_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="kClkRange">1</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
-        <spirit:instanceName>rgb2dvi_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="ip" spirit:name="rgb2dvi" spirit:vendor="digilentinc.com" spirit:version="1.4"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_rgb2dvi_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="kClkRange">1</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
         <spirit:instanceName>scene_wrapper_0</spirit:instanceName>
         <spirit:componentRef spirit:library="module_ref" spirit:name="scene_wrapper" spirit:vendor="xilinx.com" spirit:version="1.0"/>
         <spirit:configurableElementValues>
@@ -806,11 +799,17 @@
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
+        <spirit:instanceName>render_register_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="nippy" spirit:name="render_register" spirit:vendor="nippy.org" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_render_register_0_0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
         <spirit:instanceName>get_target_wrapper_0</spirit:instanceName>
         <spirit:componentRef spirit:library="module_ref" spirit:name="get_target_wrapper" spirit:vendor="xilinx.com" spirit:version="1.0"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_get_target_wrapper_0_0</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="AVERAGE_OVER">512</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:referenceName">get_target_wrapper</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
@@ -881,8 +880,8 @@
       <spirit:adHocConnection>
         <spirit:name>xlconstant_1_dout</spirit:name>
         <spirit:internalPortReference spirit:componentRef="xlconstant_1" spirit:portRef="dout"/>
-        <spirit:externalPortReference spirit:portRef="hdmi_tx_hpdn"/>
         <spirit:externalPortReference spirit:portRef="hdmi_rx_hpd"/>
+        <spirit:externalPortReference spirit:portRef="hdmi_tx_hpdn"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>sysclk_1</spirit:name>
@@ -897,11 +896,11 @@
       <spirit:adHocConnection>
         <spirit:name>dvi2rgb_0_PixelClk</spirit:name>
         <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="PixelClk"/>
+        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="PixelClk"/>
         <spirit:internalPortReference spirit:componentRef="c_shift_ram_2" spirit:portRef="CLK"/>
         <spirit:internalPortReference spirit:componentRef="c_shift_ram_3" spirit:portRef="CLK"/>
         <spirit:internalPortReference spirit:componentRef="c_shift_ram_1" spirit:portRef="CLK"/>
         <spirit:internalPortReference spirit:componentRef="c_shift_ram_0" spirit:portRef="CLK"/>
-        <spirit:internalPortReference spirit:componentRef="rgb2dvi_0" spirit:portRef="PixelClk"/>
         <spirit:internalPortReference spirit:componentRef="scene_wrapper_0" spirit:portRef="pixel_clk"/>
         <spirit:internalPortReference spirit:componentRef="get_target_wrapper_0" spirit:portRef="clk_in"/>
       </spirit:adHocConnection>
@@ -942,7 +941,6 @@
         <spirit:internalPortReference spirit:componentRef="dvi2rgb_0" spirit:portRef="vid_pVSync"/>
         <spirit:internalPortReference spirit:componentRef="c_shift_ram_1" spirit:portRef="D"/>
         <spirit:internalPortReference spirit:componentRef="scene_wrapper_0" spirit:portRef="vsync"/>
-        <spirit:internalPortReference spirit:componentRef="get_target_wrapper_0" spirit:portRef="vsync_in"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>c_shift_ram_1_Q</spirit:name>

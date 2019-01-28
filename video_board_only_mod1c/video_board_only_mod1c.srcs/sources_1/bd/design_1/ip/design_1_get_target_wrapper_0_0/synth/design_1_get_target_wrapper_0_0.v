@@ -52,13 +52,12 @@
 
 (* X_CORE_INFO = "get_target_wrapper,Vivado 2018.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_get_target_wrapper_0_0,get_target_wrapper,{}" *)
-(* CORE_GENERATION_INFO = "design_1_get_target_wrapper_0_0,get_target_wrapper,{x_ipProduct=Vivado 2018.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=get_target_wrapper,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,MAX_WIDTH=100,MIN_WIDTH=5,MAX_WIDTH_DIFF=40,WHITE_THRES=2,BLACK_THRES=0,SCREEN_WIDTH=1280,SCREEN_HEIGHT=720,COLOUR_DEPTH=8,AVERAGE_OVER=512,MIN_THRES=50,MAX_THRES=200,NUM_TARGETS=4}" *)
+(* CORE_GENERATION_INFO = "design_1_get_target_wrapper_0_0,get_target_wrapper,{x_ipProduct=Vivado 2018.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=get_target_wrapper,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,MAX_WIDTH=100,MIN_WIDTH=5,MAX_WIDTH_DIFF=40,WHITE_THRES=2,BLACK_THRES=0,SCREEN_WIDTH=1280,SCREEN_HEIGHT=720,COLOUR_DEPTH=8,AVERAGE_OVER=720,MIN_THRES=50,MAX_THRES=200,NUM_TARGETS=4}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_get_target_wrapper_0_0 (
   clk_in,
   rst_in,
-  vsync_in,
   rgb_in,
   hcount_in,
   vcount_in,
@@ -79,7 +78,6 @@ module design_1_get_target_wrapper_0_0 (
 
 input wire clk_in;
 input wire rst_in;
-input wire vsync_in;
 input wire [23 : 0] rgb_in;
 input wire [10 : 0] hcount_in;
 input wire [10 : 0] vcount_in;
@@ -106,14 +104,13 @@ output wire [3 : 0] valid_out;
     .SCREEN_WIDTH(1280),
     .SCREEN_HEIGHT(720),
     .COLOUR_DEPTH(8),
-    .AVERAGE_OVER(512),
+    .AVERAGE_OVER(720),
     .MIN_THRES(50),
     .MAX_THRES(200),
     .NUM_TARGETS(4)
   ) inst (
     .clk_in(clk_in),
     .rst_in(rst_in),
-    .vsync_in(vsync_in),
     .rgb_in(rgb_in),
     .hcount_in(hcount_in),
     .vcount_in(vcount_in),
