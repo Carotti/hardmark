@@ -9,15 +9,15 @@ module count_flips(	clk_in, // pixel clock
 					done_out // goes high when all bands for a target has been detected
 				  );
 	// maximum stripe width measured in number of pixels
-	parameter MAX_WIDTH = 150;
+	parameter MAX_WIDTH = 100;
 	// minimum stripe width measured in number of pixels
 	parameter MIN_WIDTH = 5;
 	// maximum difference in stripe width for the same target
-	parameter MAX_WIDTH_DIFF = 50;
+	parameter MAX_WIDTH_DIFF = 40;
 	// the minimum number of bits which must be high in rgb_in in order for the pixel to classify as white
 	parameter WHITE_THRES = 2;
 	// the maximum number of bits which must be high in rgb_in in order for the pixel to classify as black
-	parameter BLACK_THRES = 0;
+	parameter BLACK_THRES = 1;
 	parameter SCREEN_WIDTH = 1024;
 
 	input clk_in;

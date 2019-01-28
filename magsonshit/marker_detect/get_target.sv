@@ -21,7 +21,7 @@ module get_target(	clk_in,
 		(`DIFF(X1, X2) + `DIFF(Y1, Y2))
 
 	`define SQ_APPROX(X) \
-		(X)
+		(X << 1)
 
 	input clk_in;
 	input rst_in;
