@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-//Date        : Sun Jan 27 20:32:34 2019
+//Date        : Mon Jan 28 10:51:53 2019
 //Host        : carotti running 64-bit Ubuntu 18.04.1 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -79,8 +79,8 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:interface:iic:1.0 ddc_0 SDA_I" *) input ddc_0_sda_i;
   (* X_INTERFACE_INFO = "xilinx.com:interface:iic:1.0 ddc_0 SDA_O" *) output ddc_0_sda_o;
   (* X_INTERFACE_INFO = "xilinx.com:interface:iic:1.0 ddc_0 SDA_T" *) output ddc_0_sda_t;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_N CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_N, CLK_DOMAIN design_1_hdmi_tx_clk_n, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_n;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_P CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_P, CLK_DOMAIN design_1_hdmi_tx_clk_p, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_p;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_N CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_N, CLK_DOMAIN design_1_hdmi_rx_clk_n, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_n;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.HDMI_RX_CLK_P CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.HDMI_RX_CLK_P, CLK_DOMAIN design_1_hdmi_rx_clk_p, FREQ_HZ 100000000, PHASE 0.000" *) input hdmi_rx_clk_p;
   (* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 DATA.HDMI_RX_D_N DATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DATA.HDMI_RX_D_N, LAYERED_METADATA undef" *) input [2:0]hdmi_rx_d_n;
   (* X_INTERFACE_INFO = "xilinx.com:signal:data:1.0 DATA.HDMI_RX_D_P DATA" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DATA.HDMI_RX_D_P, LAYERED_METADATA undef" *) input [2:0]hdmi_rx_d_p;
   output [0:0]hdmi_rx_hpd;
@@ -286,7 +286,6 @@ module design_1
        (.clk_in(dvi2rgb_0_PixelClk),
         .hcount_in(scene_wrapper_0_hcount),
         .rgb_in(dvi2rgb_0_vid_pData),
-        .rst_in(xlslice_0_Dout),
         .valid_out(get_target_wrapper_0_valid_out),
         .vcount_in(scene_wrapper_0_vcount),
         .xcount0_out(get_target_wrapper_0_xcount0_out),
